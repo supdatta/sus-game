@@ -26,13 +26,13 @@ const HomePage: React.FC = () => {
     <div className="relative min-h-screen bg-gray-900 text-white overflow-hidden">
       {/* Background Video */}
       <video
-        className="absolute inset-0 object-cover w-full h-full z-0 opacity-30"
-        src="/hero-background.mp4" // Directly reference from public folder
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        src="/hero-background.mp4"
         autoPlay
         loop
         muted
         playsInline
-        poster={heroBackgroundImage}
+        poster="/sus-game/hero-background.png"
       ></video>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
