@@ -3,15 +3,15 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const pixelButtonVariants = cva(
-  "pixel-button-base font-pixel uppercase tracking-wide cursor-pointer inline-block",
+  "pixel-button-base font-medium uppercase tracking-wide cursor-pointer inline-block transition-all duration-200",
   {
     variants: {
       variant: {
-        primary: "bg-primary text-primary-foreground border-primary-foreground",
-        secondary: "bg-secondary text-secondary-foreground border-secondary-foreground",
-        accent: "bg-accent text-accent-foreground border-accent-foreground",
-        outline: "bg-transparent text-foreground border-foreground hover:bg-foreground hover:text-background",
-        hero: "bg-primary/80 backdrop-blur-sm text-white border-primary hover:bg-primary animate-pixel-glow",
+        primary: "bg-primary text-primary-foreground border-primary-foreground hover:bg-primary/90",
+        secondary: "bg-secondary text-secondary-foreground border-secondary-foreground hover:bg-secondary/90",
+        accent: "bg-accent text-accent-foreground border-accent-foreground hover:bg-accent/90",
+        outline: "bg-transparent text-foreground border-foreground hover:bg-foreground/10",
+        hero: "bg-primary/80 backdrop-blur-sm text-white border-primary hover:bg-primary/90 shadow-lg",
       },
       size: {
         sm: "px-4 py-2 text-xs",

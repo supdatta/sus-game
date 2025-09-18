@@ -8,76 +8,79 @@ All colors MUST be HSL for proper theming.
 
 @layer base {
   :root {
-    /* Pixel-art color palette */
-    --background: 30 20% 95%; /* Light beige */
-    --foreground: 30 10% 10%; /* Dark brown */
+    /* Sustainability-inspired color palette */
+    --background: 40 30% 95%; /* Creamish */
+    --foreground: 35 25% 20%; /* Soft brown */
 
-    /* Nature-inspired colors */
-    --primary: 75 40% 35%; /* Deep forest green */
+    /* Nature-focused colors */
+    --primary: 120 25% 40%; /* Earthy green */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 75 50% 55%; /* Lighter green */
+    --primary-glow: 120 30% 60%; /* Lighter green */
 
-    --secondary: 25 70% 50%; /* Earthy orange */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 30 40% 65%; /* Tan */
+    --secondary-foreground: 35 25% 20%;
 
-    --accent: 180 30% 40%; /* Muted teal */
+    --accent: 195 40% 50%; /* Fresh blue (water) */
     --accent-foreground: 0 0% 100%;
 
     /* UI colors */
-    --card: 30 20% 98%;
-    --card-foreground: 30 10% 15%;
+    --card: 40 30% 98%;
+    --card-foreground: 35 25% 25%;
 
-    --popover: 30 20% 98%;
-    --popover-foreground: 30 10% 15%;
+    --popover: 40 30% 98%;
+    --popover-foreground: 35 25% 25%;
 
-    --muted: 30 10% 90%;
-    --muted-foreground: 30 5% 40%;
+    --muted: 35 20% 90%;
+    --muted-foreground: 35 15% 40%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 15% 80%;
-    --input: 30 15% 95%;
-    --ring: 75 40% 35%;
+    --border: 35 20% 80%;
+    --input: 40 20% 95%;
+    --ring: 120 25% 40%;
 
-    --radius: 0rem; /* No rounded corners for pixel-art */
+    --radius: 0.5rem; /* Soft rounded corners for modern design */
 
-    /* Custom pixel-art variables */
-    --pixel-shadow: 4px 4px 0px hsl(30 10% 10%);
-    --pixel-shadow-hover: 2px 2px 0px hsl(30 10% 10%);
-    --gradient-nature: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-sunset: linear-gradient(180deg, hsl(25 80% 60%), hsl(15 90% 50%));
+    /* Custom pixel-art sustainability variables */
+    --pixel-shadow: 4px 4px 0px hsl(35 25% 20% / 0.8);
+    --pixel-shadow-hover: 6px 6px 0px hsl(35 25% 20% / 0.8);
+    --gradient-nature: linear-gradient(135deg, hsl(120 25% 40%), hsl(120 30% 60%));
+    --gradient-sunset: linear-gradient(180deg, hsl(30 40% 65%), hsl(35 45% 55%));
+    --pixel-leaf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23417e41' d='M4 4h2v2h2v2h2v2h2v2H8v-2H6v-2H4v-2H2V4h2z'/%3E%3C/svg%3E");
+    --pixel-water: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%233b82c4' d='M6 4h4v2h2v4h-2v2H6v-2H4V6h2V4z'/%3E%3C/svg%3E");
+    --pixel-sprout: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23417e41' d='M6 2h4v2h2v2h-2v2H6V6H4V4h2V2z'/%3E%3Cpath fill='%23a67c52' d='M7 8h2v6H7z'/%3E%3C/svg%3E");
   }
 
   .dark {
-    --background: 30 15% 8%;
-    --foreground: 30 20% 95%;
+    --background: 35 25% 10%;
+    --foreground: 40 15% 90%;
 
-    --primary: 75 40% 45%;
-    --primary-foreground: 30 15% 8%;
-    --primary-glow: 75 50% 65%;
+    --primary: 120 20% 35%;
+    --primary-foreground: 40 15% 95%;
+    --primary-glow: 120 25% 50%;
 
-    --secondary: 25 70% 55%;
-    --secondary-foreground: 30 15% 8%;
+    --secondary: 30 30% 45%;
+    --secondary-foreground: 40 15% 95%;
 
-    --accent: 180 30% 50%;
-    --accent-foreground: 30 15% 8%;
+    --accent: 195 35% 40%;
+    --accent-foreground: 40 15% 95%;
 
-    --card: 30 15% 12%;
-    --card-foreground: 30 20% 90%;
+    --card: 35 25% 15%;
+    --card-foreground: 40 15% 90%;
 
-    --popover: 30 15% 12%;
-    --popover-foreground: 30 20% 90%;
+    --popover: 35 25% 15%;
+    --popover-foreground: 40 15% 90%;
 
-    --muted: 30 10% 20%;
-    --muted-foreground: 30 5% 60%;
+    --muted: 35 20% 25%;
+    --muted-foreground: 35 10% 65%;
 
-    --destructive: 0 70% 55%;
-    --destructive-foreground: 30 15% 8%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 40 15% 95%;
 
-    --border: 30 15% 25%;
-    --input: 30 15% 15%;
-    --ring: 75 40% 45%;
+    --border: 35 20% 25%;
+    --input: 35 20% 20%;
+    --ring: 120 20% 35%;
   }
 }
 
@@ -90,53 +93,64 @@ All colors MUST be HSL for proper theming.
     @apply bg-background text-foreground;
     font-family: 'Press Start 2P', monospace;
     image-rendering: pixelated;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: crisp-edges;
   }
 
-  /* Disable anti-aliasing for pixel-perfect text */
+  /* Disable smooth text rendering for pixel-perfect look */
   * {
     -webkit-font-smoothing: none;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: geometricPrecision;
+    -moz-osx-font-smoothing: unset;
+    text-rendering: optimizeSpeed;
   }
 }
 
 @layer components {
-  /* Pixel button styles */
+  /* Pixel-art button styles */
   .pixel-button-base {
-    padding: 1.5rem 0.75rem;
-    font-weight: bold;
-    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
     border-width: 4px;
     border-style: solid;
-    transition: all 100ms;
-    @apply hover:translate-x-1 hover:translate-y-1;
-    box-shadow: var(--pixel-shadow);
+    border-radius: 0;
+    @apply shadow-pixel;
+    image-rendering: pixelated;
   }
 
   .pixel-button-base:hover {
-    box-shadow: var(--pixel-shadow-hover);
+    transform: translateY(-4px);
+    @apply shadow-pixel-hover;
   }
 
   .pixel-button-base:active {
-    @apply translate-x-1 translate-y-1;
+    transform: translateY(2px);
     box-shadow: none;
   }
 
-  /* Card styles */
+  /* Pixel-art card styles */
   .pixel-card {
-    @apply bg-card border-4 border-border p-6;
-    box-shadow: var(--pixel-shadow);
+    @apply bg-card border-4 border-border p-4;
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+    image-rendering: pixelated;
+  }
+  
+  .pixel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.2);
   }
 
-  /* Progress bar segments */
+  /* Pixel-art progress bar segments */
   .progress-segment {
-    @apply h-4 border-2 border-foreground bg-muted;
+    @apply h-4 bg-muted border-2 border-foreground;
   }
 
   .progress-segment.filled {
     @apply bg-primary;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 5px,
+      rgba(255, 255, 255, 0.1) 5px,
+      rgba(255, 255, 255, 0.1) 10px
+    );
   }
 
   /* Pixelated animations */
