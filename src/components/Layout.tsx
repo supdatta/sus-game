@@ -24,36 +24,44 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </Link>
 
           <nav className="flex space-x-2">
-            <Link to="/">
+            <Link to="/sus-game/">
               <PixelButton 
-                variant={isActivePage("/") ? "primary" : "outline"}
+                variant={isActivePage("/sus-game/") ? "primary" : "outline"}
                 size="sm"
               >
                 Home
               </PixelButton>
             </Link>
-            <Link to="/dashboard">
+            <Link to="/sus-game/dashboard">
               <PixelButton 
-                variant={isActivePage("/dashboard") ? "primary" : "outline"}
+                variant={isActivePage("/sus-game/dashboard") ? "primary" : "outline"}
                 size="sm"
               >
                 Dashboard
               </PixelButton>
             </Link>
-            <Link to="/resources">
+            <Link to="/sus-game/resources">
               <PixelButton 
-                variant={isActivePage("/resources") ? "primary" : "outline"}
+                variant={isActivePage("/sus-game/resources") ? "primary" : "outline"}
                 size="sm"
               >
                 Levels
               </PixelButton>
             </Link>
-            <Link to="/leaderboard">
+            <Link to="/sus-game/leaderboard">
               <PixelButton 
-                variant={isActivePage("/leaderboard") ? "primary" : "outline"}
+                variant={isActivePage("/sus-game/leaderboard") ? "primary" : "outline"}
                 size="sm"
               >
                 Leaderboard
+              </PixelButton>
+            </Link>
+            <Link to="/sus-game/teaching">
+              <PixelButton 
+                variant={isActivePage("/sus-game/teaching") ? "primary" : "outline"}
+                size="sm"
+              >
+                Teaching
               </PixelButton>
             </Link>
           </nav>

@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import DashboardPage from "./pages/DashboardPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
+import TeachingModulesPage from "./pages/TeachingModulesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,12 +21,13 @@ const App = () => (
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/leaderboard" element={<LeaderboardPage />} />
+            <Route path="/sus-game/" element={<HomePage />} />
+            <Route path="/sus-game/dashboard" element={<DashboardPage />} />
+            <Route path="/sus-game/resources" element={<ResourcesPage />} />
+            <Route path="/sus-game/teaching" element={<TeachingModulesPage />} />
+            <Route path="/sus-game/leaderboard" element={<LeaderboardPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="/sus-game/*" element={<NotFound />} />
           </Routes>
         </Layout>
       </BrowserRouter>

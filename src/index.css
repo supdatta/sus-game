@@ -9,75 +9,75 @@ All colors MUST be HSL for proper theming.
 @layer base {
   :root {
     /* Pixel-art color palette */
-    --background: 120 20% 95%;
-    --foreground: 120 10% 10%;
+    --background: 30 20% 95%; /* Light beige */
+    --foreground: 30 10% 10%; /* Dark brown */
 
     /* Nature-inspired colors */
-    --primary: 140 60% 40%;        /* Forest green */
+    --primary: 75 40% 35%; /* Deep forest green */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 140 70% 60%;   /* Light green */
+    --primary-glow: 75 50% 55%; /* Lighter green */
 
-    --secondary: 30 95% 60%;       /* Warm orange */
+    --secondary: 25 70% 50%; /* Earthy orange */
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 260 70% 50%;         /* Purple */
+    --accent: 180 30% 40%; /* Muted teal */
     --accent-foreground: 0 0% 100%;
 
     /* UI colors */
-    --card: 120 15% 98%;
-    --card-foreground: 120 10% 15%;
+    --card: 30 20% 98%;
+    --card-foreground: 30 10% 15%;
 
-    --popover: 120 15% 98%;
-    --popover-foreground: 120 10% 15%;
+    --popover: 30 20% 98%;
+    --popover-foreground: 30 10% 15%;
 
-    --muted: 120 10% 90%;
-    --muted-foreground: 120 5% 40%;
+    --muted: 30 10% 90%;
+    --muted-foreground: 30 5% 40%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 120 15% 80%;
-    --input: 120 15% 95%;
-    --ring: 140 60% 40%;
+    --border: 30 15% 80%;
+    --input: 30 15% 95%;
+    --ring: 75 40% 35%;
 
     --radius: 0rem; /* No rounded corners for pixel-art */
 
     /* Custom pixel-art variables */
-    --pixel-shadow: 4px 4px 0px hsl(120 10% 10%);
-    --pixel-shadow-hover: 2px 2px 0px hsl(120 10% 10%);
+    --pixel-shadow: 4px 4px 0px hsl(30 10% 10%);
+    --pixel-shadow-hover: 2px 2px 0px hsl(30 10% 10%);
     --gradient-nature: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-sunset: linear-gradient(180deg, hsl(30 100% 70%), hsl(15 100% 60%));
+    --gradient-sunset: linear-gradient(180deg, hsl(25 80% 60%), hsl(15 90% 50%));
   }
 
   .dark {
-    --background: 120 15% 8%;
-    --foreground: 120 20% 95%;
+    --background: 30 15% 8%;
+    --foreground: 30 20% 95%;
 
-    --primary: 140 60% 50%;
-    --primary-foreground: 120 15% 8%;
-    --primary-glow: 140 70% 70%;
+    --primary: 75 40% 45%;
+    --primary-foreground: 30 15% 8%;
+    --primary-glow: 75 50% 65%;
 
-    --secondary: 30 95% 65%;
-    --secondary-foreground: 120 15% 8%;
+    --secondary: 25 70% 55%;
+    --secondary-foreground: 30 15% 8%;
 
-    --accent: 260 70% 60%;
-    --accent-foreground: 120 15% 8%;
+    --accent: 180 30% 50%;
+    --accent-foreground: 30 15% 8%;
 
-    --card: 120 15% 12%;
-    --card-foreground: 120 20% 90%;
+    --card: 30 15% 12%;
+    --card-foreground: 30 20% 90%;
 
-    --popover: 120 15% 12%;
-    --popover-foreground: 120 20% 90%;
+    --popover: 30 15% 12%;
+    --popover-foreground: 30 20% 90%;
 
-    --muted: 120 10% 20%;
-    --muted-foreground: 120 5% 60%;
+    --muted: 30 10% 20%;
+    --muted-foreground: 30 5% 60%;
 
     --destructive: 0 70% 55%;
-    --destructive-foreground: 120 15% 8%;
+    --destructive-foreground: 30 15% 8%;
 
-    --border: 120 15% 25%;
-    --input: 120 15% 15%;
-    --ring: 140 60% 50%;
+    --border: 30 15% 25%;
+    --input: 30 15% 15%;
+    --ring: 75 40% 45%;
   }
 }
 
@@ -105,7 +105,12 @@ All colors MUST be HSL for proper theming.
 @layer components {
   /* Pixel button styles */
   .pixel-button-base {
-    @apply px-6 py-3 font-bold text-sm border-4 border-solid transition-all duration-100;
+    padding: 1.5rem 0.75rem;
+    font-weight: bold;
+    font-size: 0.875rem;
+    border-width: 4px;
+    border-style: solid;
+    transition: all 100ms;
     @apply hover:translate-x-1 hover:translate-y-1;
     box-shadow: var(--pixel-shadow);
   }

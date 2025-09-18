@@ -2,6 +2,8 @@ import React from "react";
 import { PixelCard } from "@/components/ui/pixel-card";
 import { PixelButton } from "@/components/ui/pixel-button";
 import { ProgressBar } from "@/components/ui/progress-bar";
+import character1Img from "@/assets/character-1.png";
+import character2Img from "@/assets/character-2.png";
 
 const DashboardPage: React.FC = () => {
   // Mock data for demonstration
@@ -21,8 +23,18 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <div className="container mx-auto max-w-6xl">
+     <div className="min-h-screen bg-background p-4 relative overflow-hidden">
+      {/* Floating decorative elements */}
+      <div className="absolute top-10 right-10 w-3 h-3 bg-primary/20 border border-primary animate-pulse"></div>
+      <div className="absolute top-40 left-20 w-4 h-4 bg-secondary/20 border border-secondary animate-pulse" style={{animationDelay: '0.5s'}}></div>
+      <div className="absolute bottom-20 right-1/4 w-2 h-2 bg-accent/20 border border-accent animate-pulse" style={{animationDelay: '1s'}}></div>
+      
+      {/* Floating character */}
+      <div className="absolute bottom-10 left-10 w-16 h-20 opacity-20 animate-pixel-bounce" style={{animationDelay: '2s'}}>
+        <img src={character2Img} alt="Character" className="w-full h-full object-contain" style={{imageRendering: 'pixelated'}} />
+      </div>
+      
+      <div className="container mx-auto max-w-6xl relative z-10">
         <h1 className="font-pixel text-2xl text-foreground mb-8 text-center">
           Your Quest Dashboard
         </h1>
@@ -83,8 +95,13 @@ const DashboardPage: React.FC = () => {
 
         {/* Quest List */}
         <div className="grid md:grid-cols-2 gap-6">
-          <PixelCard>
-            <h2 className="font-pixel text-lg text-foreground mb-6">
+         <PixelCard className="relative overflow-hidden">
+            {/* Decorative character in corner */}
+            <div className="absolute -top-2 -right-2 w-12 h-14 opacity-20">
+              <img src={character1Img} alt="Character" className="w-full h-full object-contain" style={{imageRendering: 'pixelated'}} />
+            </div>
+            
+            <h2 className="font-pixel text-lg text-foreground mb-6 relative z-10">
               Available Quests
             </h2>
             
