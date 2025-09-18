@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
       {/* Background Video */}
       <video
         className="absolute inset-0 object-cover w-full h-full z-0 opacity-30"
-        src="/sus-game/hero-background.mp4" // Directly reference from public folder
+        src="/hero-background.mp4" // Directly reference from public folder
         autoPlay
         loop
         muted
@@ -50,7 +50,7 @@ const HomePage: React.FC = () => {
         </video> */}
         <div className="absolute inset-0 bg-background/10"></div>
         
-        <div className="relative z-10 text-center max-w-2xl mx-auto px-4">
+        <div className="relative z-10 text-center max-w-xl mx-auto px-4">
           {/* Floating decorative elements */}
           <div className="absolute -top-10 -left-10 w-8 h-8 bg-primary/30 border-2 border-primary animate-pixel-bounce" style={{animationDelay: '0.5s'}}></div>
           <div className="absolute -top-5 -right-15 w-6 h-6 bg-secondary/30 border-2 border-secondary animate-pixel-bounce" style={{animationDelay: '1s'}}></div>

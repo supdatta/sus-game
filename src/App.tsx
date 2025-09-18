@@ -9,6 +9,7 @@ import DashboardPage from "./pages/DashboardPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import TeachingModulesPage from "./pages/TeachingModulesPage";
+import GamePage from "./pages/GamePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/sus-game/resources" element={<ResourcesPage />} />
             <Route path="/sus-game/teaching" element={<TeachingModulesPage />} />
             <Route path="/sus-game/leaderboard" element={<LeaderboardPage />} />
+            <Route path="/sus-game/game/:questId" element={<GamePage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="/sus-game/*" element={<NotFound />} />
           </Routes>

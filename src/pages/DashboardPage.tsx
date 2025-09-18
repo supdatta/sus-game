@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import { PixelCard } from "@/components/ui/pixel-card";
 import { PixelButton } from "@/components/ui/pixel-button";
 import { ProgressBar } from "@/components/ui/progress-bar";
@@ -34,7 +35,7 @@ const DashboardPage: React.FC = () => {
         <img src={character2Img} alt="Character" className="w-full h-full object-contain" style={{imageRendering: 'pixelated'}} />
       </div>
       
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="container mx-auto max-w-4xl relative z-10">
         <h1 className="font-pixel text-2xl text-foreground mb-8 text-center">
           Your Quest Dashboard
         </h1>
@@ -94,87 +95,53 @@ const DashboardPage: React.FC = () => {
         </PixelCard>
 
         {/* Quest List */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-1 gap-6">
          <PixelCard className="relative overflow-hidden">
             {/* Decorative character in corner */}
             <div className="absolute -top-2 -right-2 w-12 h-14 opacity-20">
               <img src={character1Img} alt="Character" className="w-full h-full object-contain" style={{imageRendering: 'pixelated'}} />
             </div>
             
-            <h2 className="font-pixel text-lg text-foreground mb-6 relative z-10">
+            <h2 className="font-pixel text-xl md:text-3xl text-foreground mb-8 relative z-10">
               Available Quests
             </h2>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {recentQuests.map((quest) => (
                 <div 
                   key={quest.id}
-                  className="flex items-center justify-between p-4 bg-muted border-2 border-border"
+                  className="flex flex-col sm:flex-row items-center justify-between p-6 bg-muted border-4 border-border shadow-pixel-sm"
                 >
-                  <div className="flex-1">
-                    <h3 className="font-pixel text-sm text-foreground mb-1">
+                  <div className="flex-1 text-center sm:text-left mb-4 sm:mb-0">
+                    <h3 className="font-pixel text-lg text-foreground mb-2">
                       {quest.title}
                     </h3>
-                    <p className="font-pixel text-xs text-muted-foreground">
+                    <p className="font-pixel text-base text-muted-foreground">
                       {quest.xp} XP
                     </p>
                   </div>
                   
-                  <PixelButton 
-                    size="sm"
-                    variant={quest.status === "completed" ? "primary" : 
-                            quest.status === "in-progress" ? "secondary" : "outline"}
-                    disabled={quest.status === "completed"}
-                  >
-                    {quest.status === "completed" ? "Done" :
-                     quest.status === "in-progress" ? "Continue" : "Start"}
-                  </PixelButton>
+                  {quest.status !== "completed" && (
+                    <Link to={`/sus-game/game/${quest.id}`}>
+                      <PixelButton 
+                        size="lg"
+                        variant={quest.status === "in-progress" ? "secondary" : "outline"}
+                        className="relative overflow-hidden group"
+                      >
+                        {/* Decorative pixel elements around button */}
+                        <div className="absolute -top-1 -left-1 w-3 h-3 bg-primary/50 border border-primary animate-pulse group-hover:animate-spin"></div>
+                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary/50 border border-secondary animate-pulse group-hover:animate-spin" style={{animationDelay: '0.2s'}}></div>
+                        {quest.status === "in-progress" ? "Continue" : "Start"}
+                      </PixelButton>
+                    </Link>
+                  )}
+                  {quest.status === "completed" && (
+                    <PixelButton size="lg" variant="primary" disabled>
+                      Done
+                    </PixelButton>
+                  )}
                 </div>
               ))}
-            </div>
-          </PixelCard>
-
-          <PixelCard>
-            <h2 className="font-pixel text-lg text-foreground mb-6">
-              Achievements
-            </h2>
-            
-            <div className="space-y-4">
-              <div className="flex items-center p-4 bg-primary/10 border-2 border-primary">
-                <div className="w-8 h-8 bg-primary border-2 border-foreground mr-4"></div>
-                <div>
-                  <h3 className="font-pixel text-sm text-foreground">
-                    Eco Warrior
-                  </h3>
-                  <p className="font-pixel text-xs text-muted-foreground">
-                    Complete 10 quests
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-center p-4 bg-secondary/10 border-2 border-secondary">
-                <div className="w-8 h-8 bg-secondary border-2 border-foreground mr-4"></div>
-                <div>
-                  <h3 className="font-pixel text-sm text-foreground">
-                    Planet Protector
-                  </h3>
-                  <p className="font-pixel text-xs text-muted-foreground">
-                    Save 50kg of CO2
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-center p-4 bg-muted border-2 border-border opacity-50">
-                <div className="w-8 h-8 bg-muted-foreground border-2 border-foreground mr-4"></div>
-                <div>
-                  <h3 className="font-pixel text-sm text-muted-foreground">
-                    Green Champion
-                  </h3>
-                  <p className="font-pixel text-xs text-muted-foreground">
-                    Reach level 10
-                  </p>
-                </div>
-              </div>
             </div>
           </PixelCard>
         </div>

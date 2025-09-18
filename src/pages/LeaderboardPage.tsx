@@ -40,7 +40,7 @@ const LeaderboardPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background p-4">
-      <div className="container mx-auto max-w-4xl">
+      <div className="container mx-auto max-w-2xl">
         <h1 className="font-pixel text-2xl text-foreground mb-8 text-center">
           Global Leaderboard
         </h1>
