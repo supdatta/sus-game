@@ -48,7 +48,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 variant={isActivePage("/sus-game/dashboard") ? "primary" : "outline"}
                 size="sm"
               >
-                Dashboard
+                Quest
               </PixelButton>
             </Link>
             <Link to="/sus-game/resources">
@@ -65,6 +65,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 size="sm"
               >
                 Leaderboard
+              </PixelButton>
+            </Link>
+            <Link to="/sus-game/eco-scan">
+              <PixelButton 
+                variant={isActivePage("/sus-game/eco-scan") ? "primary" : "outline"}
+                size="sm"
+              >
+                Eco-Scan
               </PixelButton>
             </Link>
             <Link to="/sus-game/teaching">

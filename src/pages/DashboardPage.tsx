@@ -5,8 +5,13 @@ import { PixelButton } from "@/components/ui/pixel-button";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import character1Img from "@/assets/character-1.png";
 import character2Img from "@/assets/character-2.png";
+// Using a placeholder for eco-scanner image
+const ecoScannerImg = "/placeholder.svg";
+import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
 
 const DashboardPage: React.FC = () => {
+  // Use the scroll hook to enable auto-scrolling to the Eco-Scan section
+  useScrollToHash();
   // Mock data for demonstration
   const userStats = {
     level: 5,
@@ -144,6 +149,8 @@ const DashboardPage: React.FC = () => {
               ))}
             </div>
           </PixelCard>
+          
+
         </div>
       </div>
     </div>

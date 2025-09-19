@@ -96,6 +96,16 @@ All colors MUST be HSL for proper theming.
     image-rendering: pixelated;
   }
 
+  /* Animation for scanner line */
+  @keyframes scanLine {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+
+  .animate-scan-line {
+    animation: scanLine 2s linear infinite;
+  }
+
   /* Disable smooth text rendering for pixel-perfect look */
   * {
     -webkit-font-smoothing: none;

@@ -104,11 +104,29 @@ const HomePage: React.FC = () => {
                   </PixelButton>
                 </Link>
                 
-                <Link to="/sus-game/resources">
-                  <PixelButton variant="secondary" size="lg" className="w-full md:w-auto">
-                    Learn More
+                <Link to="/sus-game/eco-scan">
+                  <PixelButton variant="primary" size="lg" className="w-full md:w-auto relative">
+                    {/* Autumn Brown pixel-art icon */}
+                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 mr-2 bg-[#8B5A2B]/20 border border-[#8B5A2B] flex items-center justify-center">
+                      <svg className="w-4 h-4 text-[#8B5A2B]" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style={{imageRendering: 'pixelated'}}>
+                        <rect x="4" y="2" width="2" height="2" fill="currentColor" />
+                        <rect x="6" y="2" width="2" height="2" fill="currentColor" />
+                        <rect x="2" y="4" width="2" height="2" fill="currentColor" />
+                        <rect x="4" y="4" width="2" height="2" fill="currentColor" />
+                        <rect x="6" y="4" width="2" height="2" fill="currentColor" />
+                        <rect x="8" y="4" width="2" height="2" fill="currentColor" />
+                        <rect x="4" y="6" width="2" height="2" fill="currentColor" />
+                        <rect x="6" y="6" width="2" height="2" fill="currentColor" />
+                        <rect x="8" y="8" width="2" height="2" fill="currentColor" />
+                        <rect x="10" y="10" width="2" height="2" fill="currentColor" />
+                        <rect x="12" y="12" width="2" height="2" fill="currentColor" />
+                      </svg>
+                    </div>
+                    <span className="ml-7">Eco Scan</span>
                   </PixelButton>
                 </Link>
+                
+
               </div>
             </div>
           </PixelCard>
