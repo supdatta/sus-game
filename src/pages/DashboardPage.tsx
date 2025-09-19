@@ -5,27 +5,25 @@ import { PixelButton } from "@/components/ui/pixel-button";
 import { ProgressBar } from "@/components/ui/progress-bar";
 import character1Img from "@/assets/character-1.png";
 import character2Img from "@/assets/character-2.png";
-// Using a placeholder for eco-scanner image
-const ecoScannerImg = "/placeholder.svg";
-import { useScrollToHash } from "@/hooks/use-scroll-to-hash";
+import plantImg from "@/assets/plant.svg";
+import booksImg from "@/assets/books.svg";
+import medalImg from "@/assets/medal.svg";
+import forestSceneImg from "@/assets/forest-scene.png";
 
 const DashboardPage: React.FC = () => {
-  // Use the scroll hook to enable auto-scrolling to the Eco-Scan section
-  useScrollToHash();
   // Mock data for demonstration
   const userStats = {
     level: 5,
-    xp: 750,
-    xpToNext: 1000,
+    ecoPoints: 750,
+    ecoPointsToNext: 1000,
     completedQuests: 12,
-    carbonSaved: 45.6,
   };
 
   const recentQuests = [
-    { id: 1, title: "Reduce Plastic Use", status: "completed", xp: 50 },
-    { id: 2, title: "Plant a Tree", status: "completed", xp: 75 },
-    { id: 3, title: "Energy Conservation", status: "in-progress", xp: 100 },
-    { id: 4, title: "Water Saving Challenge", status: "available", xp: 60 },
+    { id: 1, title: "Reduce Plastic Use", status: "completed", ecoPoints: 50, image: plantImg },
+    { id: 2, title: "Plant a Tree", status: "completed", ecoPoints: 75, image: booksImg },
+    { id: 3, title: "Energy Conservation", status: "in-progress", ecoPoints: 100, image: medalImg },
+    { id: 4, title: "Water Saving Challenge", status: "available", ecoPoints: 60, image: forestSceneImg },
   ];
 
   return (
@@ -46,7 +44,7 @@ const DashboardPage: React.FC = () => {
         </h1>
 
         {/* Stats Overview */}
-        <div className="grid md:grid-cols-4 gap-6 mb-8">
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
           <PixelCard className="text-center">
             <div className="text-2xl font-pixel text-primary mb-2">
               {userStats.level}
@@ -65,24 +63,31 @@ const DashboardPage: React.FC = () => {
             </div>
           </PixelCard>
 
-          <PixelCard className="text-center">
-            <div className="text-2xl font-pixel text-accent mb-2">
-              {userStats.carbonSaved}kg
-            </div>
-            <div className="text-xs font-pixel text-muted-foreground">
-              Carbon Saved
-            </div>
-          </PixelCard>
 
           <PixelCard className="text-center">
             <div className="text-2xl font-pixel text-primary mb-2">
-              {userStats.xp}
+              {userStats.ecoPoints}
             </div>
             <div className="text-xs font-pixel text-muted-foreground">
-              Experience
+              Eco Points
             </div>
           </PixelCard>
         </div>
+
+        {/* Current Level Section */}
+        <PixelCard className="mb-8">
+          <h2 className="font-pixel text-lg text-foreground mb-4">
+            Current Level
+          </h2>
+          <ProgressBar
+            value={userStats.level}
+            max={100}
+            className="mb-4"
+          />
+          <p className="font-pixel text-xs text-muted-foreground">
+            You are at level {userStats.level}
+          </p>
+        </PixelCard>
 
         {/* Progress Section */}
         <PixelCard className="mb-8">
@@ -90,67 +95,45 @@ const DashboardPage: React.FC = () => {
             Level Progress
           </h2>
           <ProgressBar 
-            value={userStats.xp} 
-            max={userStats.xpToNext} 
+            value={userStats.ecoPoints} 
+            max={userStats.ecoPointsToNext} 
             className="mb-4"
           />
           <p className="font-pixel text-xs text-muted-foreground">
-            {userStats.xpToNext - userStats.xp} XP to Level {userStats.level + 1}
+            {userStats.ecoPointsToNext - userStats.ecoPoints} Eco Points to Level {userStats.level + 1}
           </p>
         </PixelCard>
 
         {/* Quest List */}
-        <div className="grid md:grid-cols-1 gap-6">
-         <PixelCard className="relative overflow-hidden">
-            {/* Decorative character in corner */}
-            <div className="absolute -top-2 -right-2 w-12 h-14 opacity-20">
-              <img src={character1Img} alt="Character" className="w-full h-full object-contain" style={{imageRendering: 'pixelated'}} />
-            </div>
-            
-            <h2 className="font-pixel text-xl md:text-3xl text-foreground mb-8 relative z-10">
-              Available Quests
-            </h2>
-            
-            <div className="space-y-6">
-              {recentQuests.map((quest) => (
-                <div 
-                  key={quest.id}
-                  className="flex flex-col sm:flex-row items-center justify-between p-6 bg-muted border-4 border-border shadow-pixel-sm"
-                >
-                  <div className="flex-1 text-center sm:text-left mb-4 sm:mb-0">
-                    <h3 className="font-pixel text-lg text-foreground mb-2">
-                      {quest.title}
-                    </h3>
-                    <p className="font-pixel text-base text-muted-foreground">
-                      {quest.xp} XP
-                    </p>
-                  </div>
-                  
-                  {quest.status !== "completed" && (
-                    <Link to={`/sus-game/game/${quest.id}`}>
-                      <PixelButton 
-                        size="lg"
-                        variant={quest.status === "in-progress" ? "secondary" : "outline"}
-                        className="relative overflow-hidden group"
-                      >
-                        {/* Decorative pixel elements around button */}
-                        <div className="absolute -top-1 -left-1 w-3 h-3 bg-primary/50 border border-primary animate-pulse group-hover:animate-spin"></div>
-                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-secondary/50 border border-secondary animate-pulse group-hover:animate-spin" style={{animationDelay: '0.2s'}}></div>
-                        {quest.status === "in-progress" ? "Continue" : "Start"}
-                      </PixelButton>
-                    </Link>
-                  )}
-                  {quest.status === "completed" && (
-                    <PixelButton size="lg" variant="primary" disabled>
-                      Done
-                    </PixelButton>
-                  )}
-                </div>
-              ))}
-            </div>
-          </PixelCard>
-          
-
+        <div className="grid md:grid-cols-2 gap-6">
+          {recentQuests.map((quest) => (
+            <PixelCard key={quest.id} className="flex flex-col">
+              <img src={quest.image} alt={quest.title} className="w-full h-32 object-cover mb-4" style={{imageRendering: 'pixelated'}} />
+              <div className="flex-grow">
+                <h3 className="font-pixel text-lg text-foreground mb-2">
+                  {quest.title}
+                </h3>
+                <p className="font-pixel text-sm text-muted-foreground mb-4">
+                  {quest.ecoPoints} Eco Points
+                </p>
+              </div>
+              {quest.status !== "completed" && (
+                <Link to={`/sus-game/game/${quest.id}`} className="mt-auto">
+                  <PixelButton 
+                    variant={quest.status === "in-progress" ? "secondary" : "outline"}
+                    className="w-full"
+                  >
+                    {quest.status === "in-progress" ? "Continue" : "Start"}
+                  </PixelButton>
+                </Link>
+              )}
+              {quest.status === "completed" && (
+                <PixelButton variant="primary" disabled className="w-full mt-auto">
+                  Done
+                </PixelButton>
+              )}
+            </PixelCard>
+          ))}
         </div>
       </div>
     </div>
