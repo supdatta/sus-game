@@ -6,6 +6,8 @@
 All colors MUST be HSL for proper theming.
 */
 
+/* Remove the body background image as it's not needed */
+
 @layer base {
   :root {
     /* Enhanced sustainability-inspired color palette */
@@ -96,6 +98,63 @@ All colors MUST be HSL for proper theming.
     image-rendering: pixelated;
   }
 
+  /* Navigation button styling */
+  .nav-button {
+    color: white !important;
+    border: 2px solid white !important;
+    transition: all 0.3s ease !important;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  }
+  
+  .nav-button:hover, .nav-button:active {
+    color: #00FFFF !important;
+    border-color: #00FFFF !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 8px #00FFFF;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+  }
+  
+  /* Content div styling */
+  .content-card, .pixel-card {
+    background-color: #F0D8C2 !important;
+    border-radius: 8px !important;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.2) !important;
+  }
+  
+  /* Main content area styling for readability */
+  .main-content-area {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Quest and Eco Scan icon styling */
+  .quest-icon, .ecoscan-icon {
+    color: #AB613C !important;
+  }
+  
+  /* Ensure all transitions are smooth */
+  a, button, .pixel-button {
+    transition: all 0.3s ease !important;
+  }
+  
+  /* Ensure text readability on backgrounds */
+  h1, h2, h3, h4, h5, h6, p {
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  }
+  
+  /* Ensure text readability on textured backgrounds */
+  h1, h2, h3, h4, h5, h6, p, span, a {
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  }
+  
+  main {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
   /* Animation for scanner line */
   @keyframes scanLine {
     0% { top: 0; }
@@ -166,10 +225,11 @@ All colors MUST be HSL for proper theming.
 
   /* Pixel-art card styles with eco-inspired accents */
   .pixel-card {
-    @apply bg-card text-card-foreground rounded-none border-2 border-border p-4;
+    @apply rounded-none border-2 border-border p-4 text-white;
     box-shadow: var(--pixel-shadow);
     image-rendering: pixelated;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #3C4423;
     background-image: var(--pixel-texture);
     position: relative;
   }
@@ -188,7 +248,7 @@ All colors MUST be HSL for proper theming.
   
   .pixel-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--pixel-shadow-hover);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
     background-image: linear-gradient(to bottom, transparent, transparent), var(--pixel-texture);
     background-position: 0 0, 2px 2px;
   }

@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <div className="relative min-h-screen text-white overflow-hidden">
+      <div className="relative min-h-screen text-white overflow-hidden" >
         {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
@@ -63,7 +63,7 @@ const HomePage: React.FC = () => {
         
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/50"  style={{backgroundColor: "#F5F1EA33"}}></div>
           
           <div className="relative z-10 text-center max-w-xl mx-auto px-4">
             <PixelCard className="bg-background/20 backdrop-blur-sm relative overflow-hidden border-white/30">
@@ -80,13 +80,12 @@ const HomePage: React.FC = () => {
                 
                 <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
                   <Link to="/sus-game/dashboard">
-                    <PixelButton variant="primary" size="lg" className="w-full md:w-auto">
-                      Start Quest
+                    <PixelButton variant="primary" size="lg" className="w-full md:w-auto quest-icon">
+                      <span>Start Quest</span>
                     </PixelButton>
                   </Link>
                   <Link to="/sus-game/eco-scan">
-                    <PixelButton variant="secondary" size="lg" className="w-full md:w-auto flex items-center justify-center space-x-2">
-                      {/* --- SVG Added here --- */}
+                    <PixelButton variant="secondary" size="lg" className="w-full md:w-auto flex items-center justify-center space-x-2 ecoscan-icon">
                       <EcoScanSVG />
                       <span>Eco Scan</span>
                     </PixelButton>
@@ -99,16 +98,18 @@ const HomePage: React.FC = () => {
       </div>
 
       {/* Features Section */}
-       <section className="py-20 bg-background relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
+       <section className="py-20 bg-background relative overflow-hidden"  style={{backgroundColor: "#F0D8C2"}}>
+        <div className="container mx-auto px-4 relative z-10"  >
           <h2 className="font-pixel text-xl md:text-2xl text-center text-foreground mb-12">
             Why Join Our Quest?
           </h2>
           
+      
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <PixelCard className="text-center hover:transform hover:-translate-y-1 transition-transform duration-200">
               <div className="w-16 h-16 bg-primary border-4 border-foreground mx-auto mb-4 relative overflow-hidden flex items-center justify-center">
-                <div className="absolute inset-2 bg-primary-glow animate-pulse opacity-50"></div>
+    
+                <div className="absolute inset-2 bg-primary-glow animate-pulse opacity-50" ></div>
                 <LearningSVG />
               </div>
               <h3 className="font-pixel text-sm text-foreground mb-4">
@@ -119,7 +120,7 @@ const HomePage: React.FC = () => {
               </p>
             </PixelCard>
             
-            <PixelCard className="text-center hover:transform hover:-translate-y-1 transition-transform duration-200">
+            <PixelCard className="text-center hover:transform hover:-translate-y-1 transition-transform duration-200" style={{backgroundColor: "#F0D8C2"}}>
               <div className="w-16 h-16 bg-secondary border-4 border-foreground mx-auto mb-4 relative overflow-hidden flex items-center justify-center">
                 <div className="absolute inset-2 bg-secondary animate-pulse opacity-30"></div>
                 <ImpactSVG />
@@ -132,7 +133,7 @@ const HomePage: React.FC = () => {
               </p>
             </PixelCard>
             
-            <PixelCard className="text-center hover:transform hover:-translate-y-1 transition-transform duration-200">
+            <PixelCard className="text-center hover:transform hover:-translate-y-1 transition-transform duration-200" style={{backgroundColor: "#3C4423"}}>
               <div className="w-16 h-16 bg-accent border-4 border-foreground mx-auto mb-4 relative overflow-hidden flex items-center justify-center">
                 <div className="absolute inset-2 bg-accent animate-pulse opacity-40"></div>
                 <ProgressSVG />
