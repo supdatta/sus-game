@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Pixel-art design system for Sustainability Quest 
+All colors MUST be HSL for proper theming.
+*/
+
+@layer base {
+  :root {
+    /* Enhanced sustainability-inspired color palette */
+    --background: 38 35% 94%; /* Warm creamish with subtle richness */
+    --foreground: 32 28% 18%; /* Rich soft brown for better contrast */
+
+    /* Vibrant nature-focused colors */
+    --primary: 125 35% 38%; /* Lush forest green */
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 120 45% 65%; /* Vibrant glowing green */
+
+    --secondary: 28 45% 68%; /* Rich soft tan */
+    --secondary-foreground: 32 28% 18%;
+
+    --accent: 195 65% 55%; /* Glowing fresh blue (water) */
+    --accent-foreground: 0 0% 100%;
+
+    /* Enhanced UI colors */
+    --card: 38 35% 97%;
+    --card-foreground: 32 28% 22%;
+
+    --popover: 38 35% 97%;
+    --popover-foreground: 32 28% 22%;
+
+    --muted: 32 25% 88%;
+    --muted-foreground: 32 20% 38%;
+
+    --destructive: 0 75% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 32 25% 75%;
+    --input: 38 25% 92%;
+    --ring: 125 35% 38%;
+
+    --radius: 0px; /* Pixel-perfect corners for retro design */
+
+    /* Enhanced pixel-art sustainability variables */
+    --pixel-shadow: 4px 4px 0px hsl(32 28% 18% / 0.85);
+    --pixel-shadow-hover: 6px 6px 0px hsl(32 28% 18% / 0.85);
+    --gradient-nature: linear-gradient(135deg, hsl(125 35% 38%), hsl(120 45% 65%));
+    --gradient-sunset: linear-gradient(180deg, hsl(28 45% 68%), hsl(32 50% 58%));
+    --pixel-leaf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23347a34' d='M4 4h2v2h2v2h2v2h2v2H8v-2H6v-2H4v-2H2V4h2z'/%3E%3C/svg%3E");
+    --pixel-water: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%232b8dd9' d='M6 4h4v2h2v4h-2v2H6v-2H4V6h2V4z'/%3E%3C/svg%3E");
+    --pixel-sprout: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23347a34' d='M6 2h4v2h2v2h-2v2H6V6H4V4h2V2z'/%3E%3Cpath fill='%23a06b3f' d='M7 8h2v6H7z'/%3E%3C/svg%3E");
+    --pixel-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23347a34' fill-opacity='0.05' d='M0 0h4v4H0V0zm8 0h4v4H8V0zm8 0h4v4h-4V0zm8 0h4v4h-4V0zM4 4h4v4H4V4zm8 0h4v4h-4V4zm8 0h4v4h-4V4zM0 8h4v4H0V8zm8 0h4v4H8V8zm8 0h4v4h-4V8zm8 0h4v4h-4V8zM4 12h4v4H4v-4zm8 0h4v4h-4v-4zm8 0h4v4h-4v-4zM0 16h4v4H0v-4zm8 0h4v4H8v-4zm8 0h4v4h-4v-4zm8 0h4v4h-4v-4zM4 20h4v4H4v-4zm8 0h4v4h-4v-4zm8 0h4v4h-4v-4zM0 24h4v4H0v-4zm8 0h4v4H8v-4zm8 0h4v4h-4v-4zm8 0h4v4h-4v-4z'/%3E%3C/svg%3E");
+  }
+
+  .dark {
+    --background: 32 30% 12%;
+    --foreground: 38 20% 92%;
+
+    --primary: 125 25% 32%;
+    --primary-foreground: 38 20% 95%;
+    --primary-glow: 120 40% 45%;
+
+    --secondary: 28 35% 40%;
+    --secondary-foreground: 38 20% 95%;
+
+    --accent: 195 60% 45%;
+    --accent-foreground: 38 20% 95%;
+
+    --card: 32 30% 16%;
+    --card-foreground: 38 20% 92%;
+
+    --popover: 32 30% 16%;
+    --popover-foreground: 38 20% 92%;
+
+    --muted: 32 25% 22%;
+    --muted-foreground: 32 15% 70%;
+
+    --destructive: 0 75% 45%;
+    --destructive-foreground: 38 20% 95%;
+
+    --border: 32 25% 28%;
+    --input: 32 25% 20%;
+    --ring: 125 25% 32%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Press Start 2P', monospace;
+    image-rendering: pixelated;
+  }
+
+  /* Animation for scanner line */
+  @keyframes scanLine {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+
+  .animate-scan-line {
+    animation: scanLine 2s linear infinite;
+  }
+
+  /* Disable smooth text rendering for pixel-perfect look */
+  * {
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    text-rendering: optimizeSpeed;
+  }
+}
+
+@layer components {
+  /* Pixel-art button styles with eco-inspired accents */
+  .pixel-button-base {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 0;
+    @apply shadow-pixel;
+    image-rendering: pixelated;
+    transition: transform 0.1s, box-shadow 0.1s, background-position 0.3s;
+    position: relative;
+    background-image: linear-gradient(to bottom, transparent, transparent);
+  }
+
+  .pixel-button-base:hover {
+    transform: translateY(-4px);
+    @apply shadow-pixel-hover;
+    background-image: linear-gradient(to bottom, transparent calc(100% - 4px), hsl(var(--primary) / 0.3) calc(100% - 4px), hsl(var(--primary) / 0.3));
+  }
+
+  .pixel-button-base:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
+  
+  .pixel-button-base.variant-primary::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 4px;
+    width: 6px;
+    height: 6px;
+    background-image: var(--pixel-leaf);
+    background-size: contain;
+    opacity: 0.8;
+  }
+
+  .pixel-button-base.variant-outline::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    right: 4px;
+    width: 6px;
+    height: 6px;
+    background-image: var(--pixel-water);
+    background-size: contain;
+    opacity: 0.8;
+  }
+
+  /* Pixel-art card styles with eco-inspired accents */
+  .pixel-card {
+    @apply bg-card text-card-foreground rounded-none border-2 border-border p-4;
+    box-shadow: var(--pixel-shadow);
+    image-rendering: pixelated;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-image: var(--pixel-texture);
+    position: relative;
+  }
+
+  .pixel-card::after {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    width: 8px;
+    height: 8px;
+    background-image: var(--pixel-sprout);
+    background-size: contain;
+    opacity: 0.7;
+  }
+  
+  .pixel-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--pixel-shadow-hover);
+    background-image: linear-gradient(to bottom, transparent, transparent), var(--pixel-texture);
+    background-position: 0 0, 2px 2px;
+  }
+
+  /* Pixel-art progress bar styles with eco-inspired glow */
+  .progress-segment {
+    @apply h-4 w-4 bg-muted border border-border;
+    image-rendering: pixelated;
+    transition: background-color 0.3s;
+  }
+
+  .progress-segment.filled {
+    @apply bg-primary;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.2) 2px,
+      rgba(255, 255, 255, 0.2) 4px
+    );
+    box-shadow: 0 0 4px hsl(var(--primary-glow) / 0.6);
+    animation: pulse 2s infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 4px hsl(var(--primary-glow) / 0.4);
+    }
+    100% {
+      box-shadow: 0 0 8px hsl(var(--primary-glow) / 0.7);
+    }
+  }
+
+  /* Pixelated animations */
+  @keyframes pixel-bounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes pixel-glow {
+    0%, 100% { box-shadow: var(--pixel-shadow); }
+    50% { box-shadow: var(--pixel-shadow), 0 0 20px hsl(var(--primary-glow) / 0.5); }
+  }
+
+  .animate-pixel-bounce {
+    animation: pixel-bounce 2s infinite;
+  }
+
+  .animate-pixel-glow {
+    animation: pixel-glow 2s infinite;
+  }
+}
