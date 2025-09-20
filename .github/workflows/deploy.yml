@@ -38,8 +38,10 @@ jobs:
           cache: 'npm'
 
       # Step 3: Installs all your project's dependencies (from package.json)
-      - name: Install dependencies
-        run: npm install
+      - name: Clean Install Dependencies
+        # This command removes the lock file to prevent platform conflicts
+        # and then installs fresh dependencies for the Linux environment.
+        run: rm -f package-lock.json && npm install
 
       # Step 4: Runs the build script to create the static website files
       - name: Build
@@ -58,4 +60,4 @@ jobs:
       # Step 7: Deploys the uploaded files to your GitHub Pages site
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
