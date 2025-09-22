@@ -1,0 +1,63 @@
+# Name for this automated workflow
+name: Deploy Website to GitHub Pages
+
+on:
+  # This workflow runs automatically on any push to the "main" branch
+  push:
+    branches: ["main"]
+
+  # This allows you to run the workflow manually from the "Actions" tab on GitHub
+  workflow_dispatch:
+
+# Permissions needed for the workflow to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checks out your repository's code
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step 2: Sets up the correct version of Node.js
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Step 3: Installs all your project's dependencies (from package.json)
+      - name: Clean Install Dependencies
+        # This command removes the lock file to prevent platform conflicts
+        # and then installs fresh dependencies for the Linux environment.
+        run: rm -f package-lock.json && npm install
+
+      # Step 4: Runs the build script to create the static website files
+      - name: Build
+        run: npm run build
+
+      # Step 5: Configures GitHub Pages for deployment
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Step 6: Uploads the built files (from the 'dist' folder)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      # Step 7: Deploys the uploaded files to your GitHub Pages site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

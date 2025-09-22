@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- ENHANCED DARK THEME (Inspired by your screenshots) --- */
+@layer base {
+  :root {
+    /* Core Palette - UPDATED FOR VISIBILITY */
+    --background: 30 20% 12%;       /* Dark, rich brown */
+    --foreground: 35 30% 88%;       /* Warm off-white for text (FIXES VISIBILITY) */
+    
+    /* Cards & Popovers - UPDATED FOR VISIBILITY */
+    --card: 30 18% 20%;             /* Medium-dark brown for cards */
+    --card-foreground: 35 30% 88%;  /* Text on cards is now off-white (FIXES VISIBILITY) */
+    --popover: 30 18% 20%;
+    --popover-foreground: 35 30% 88%;
+    
+    /* Primary / Accent Colors */
+    --primary: 120 45% 55%;         /* Vibrant green for accents */
+    --primary-foreground: 120 20% 10%; /* Dark text for on-green buttons */
+    --primary-glow: 120 50% 70%;
+    
+    /* Secondary Colors */
+    --secondary: 30 25% 40%;        /* Muted brown for secondary buttons */
+    --secondary-foreground: 35 30% 90%;
+    
+    /* Muted & Utility Colors */
+    --muted: 30 15% 30%;
+    --muted-foreground: 35 20% 65%;
+    --accent: 195 65% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Borders & Inputs */
+    --border: 30 15% 35%;           /* Subtle, lighter brown for borders */
+    --input: 30 15% 35%;
+    --ring: 120 45% 55%;
+    
+    /* General Sizing & Effects */
+    --radius: 0px; /* Sharp corners for pixel-art style */
+    --pixel-shadow: 4px 4px 0px hsl(30 20% 8% / 0.75);
+    --pixel-shadow-hover: 6px 6px 0px hsl(30 20% 8% / 0.75);
+  }
+
+  /* The .dark class can be used for overrides if you ever add a light/dark mode toggle */
+  .dark {
+    /* All the :root variables will apply here by default */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Press Start 2P', monospace;
+    image-rendering: pixelated; /* Ensures images have a crisp, pixelated look */
+  }
+  /* Disables font smoothing for a more authentic pixel-font appearance */
+  * {
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    text-rendering: optimizeSpeed;
+  }
+
+  /* --- NEW: Text shadow for better visibility on dark backgrounds --- */
+  h1, h2, h3, h4, h5, h6 {
+    text-shadow: 2px 2px 0px hsl(var(--background) / 0.7);
+  }
+}
+
+@layer components {
+  /* --- CLASS FOR THE LEAF TEXTURE --- */
+  /* This will be used in your Layout.tsx for the header and footer */
+  .bg-leaf-texture {
+    background-color: hsl(var(--foreground) / 0.05); /* A very subtle base to make the texture pop */
+    background-image: url('../assets/leaf-texture.png'); /* Assumes image is named leaf-texture.png */
+    background-blend-mode: overlay;
+    background-size: 48px;
+    image-rendering: pixelated;
+  }
+
+  /* --- Base styles for your custom components to ensure they use the new theme --- */
+  .pixel-card {
+    @apply bg-card text-card-foreground rounded-none border-2 border-border p-4;
+    box-shadow: var(--pixel-shadow);
+    image-rendering: pixelated;
+  }
+}
+
