@@ -3,51 +3,44 @@ import { useParams, useNavigate } from "react-router-dom";
 import { PixelCard } from "@/components/ui/pixel-card";
 import { PixelButton } from "@/components/ui/pixel-button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useUser } from "@/context/UserContext"; // Import the useUser hook
 
-// --- Existing Mindmap Imports ---
+// --- Mindmap Imports ---
 import waterMindmap1 from "@/assets/water-mindmap-1.png";
 import waterMindmap2 from "@/assets/water-mindmap-2.png";
 import waterMindmap3 from "@/assets/water-mindmap-3.png";
 import waterMindmap4 from "@/assets/water-mindmap-4.png";
 import forestMindmap1 from "@/assets/forest-mindmap-1.png";
 import forestMindmap2 from "@/assets/forest-mindmap-2.png";
-
-// --- Energy Mindmap Imports (ensuring .jpg extension) ---
 import EnergyMindmap1 from "@/assets/Energy-Mindmap-1.jpg";
 import EnergyMindmap2 from "@/assets/Energy-Mindmap-2.jpg";
 import EnergyMindmap3 from "@/assets/Energy-Mindmap-3.jpg";
 import EnergyMindmap4 from "@/assets/Energy-Mindmap-4.jpg";
 import EnergyMindmap5 from "@/assets/Energy-Mindmap-5.jpg";
-
-// --- NEW SDG Mindmap Imports (assuming .jpg extension) ---
 import SDG_Mindmap_1 from "@/assets/SDG-Mindmap-1.jpg";
 import SDG_Mindmap_2 from "@/assets/SDG-Mindmap-2.jpg";
 import SDG_Mindmap_3 from "@/assets/SDG-Mindmap-3.jpg";
 import SDG_Mindmap_4 from "@/assets/SDG-Mindmap-4.jpg";
 import SDG_Mindmap_5 from "@/assets/SDG-Mindmap-5.jpg";
-
 import completionImage from "@/assets/completion_image.svg";
 
-// --- STATIC DATA INTERFACES ---
+// --- Interfaces and Static Data (Content remains the same) ---
 interface SectionContent {
   title: string;
   content: string;
   points: string[];
   image?: string;
 }
-
 interface ModuleDetailContent {
   executiveSummary: string;
   sections: SectionContent[];
 }
-
 interface ModuleContent {
   title: string;
   youtubeId: string;
   content: ModuleDetailContent;
   mindmaps: { title: string; image: string }[];
 }
-
 const waterConservationContent: ModuleContent = {
     title: "Water Conservation",
     youtubeId: "rqF39vL9gmY",
@@ -64,7 +57,7 @@ const waterConservationContent: ModuleContent = {
           ]
         },
         {
-          title: "2. Core Drivers of the Water Crisis", 
+          title: "2. Core Drivers of the Water Crisis",
           content: "The global crisis is exacerbated by overconsumption, pollution, and environmental pressures.",
           points: [
             "Running the Tap: Leaving the tap on while brushing teeth can waste up to 12 liters of water each time.",
@@ -109,7 +102,6 @@ const waterConservationContent: ModuleContent = {
       { title: "Addressing Water Pollution from Common Soaps", image: waterMindmap4 }
     ]
   };
-
 const forestConservationContent: ModuleContent = {
     title: "Forest Conservation",
     youtubeId: "ZG3iTtu66cw",
@@ -168,8 +160,6 @@ const forestConservationContent: ModuleContent = {
       { title: "Deforestation: A Global Crisis", image: forestMindmap2 }
     ]
 };
-
-// --- NEW MODULE CONTENT: Energy Conservation ---
 const energyConservationContent: ModuleContent = {
     title: "Energy Conservation",
     youtubeId: "vWvVl-SFFdk",
@@ -309,8 +299,6 @@ const energyConservationContent: ModuleContent = {
       { title: "A Framework for Action: The Ant Philosophy", image: EnergyMindmap5 }
     ]
 };
-
-// --- PLACEHOLDER for Renewable Energy (Kept as is, as requested) ---
 const renewableEnergyContent: ModuleContent = {
     title: "Renewable Energy",
     youtubeId: "Txxp8_iV-tM", // Example YouTube video ID
@@ -331,8 +319,6 @@ const renewableEnergyContent: ModuleContent = {
       // Add mindmap imports and objects here when ready
     ]
 };
-
-// --- NEW MODULE CONTENT: SDG Part 1 ---
 const sdgPart1Content: ModuleContent = {
   title: "SDG Part 1: Core Framework and Social Equity",
   youtubeId: "ETqEJMYAfJ0",
@@ -420,8 +406,6 @@ const sdgPart1Content: ModuleContent = {
     { title: "Human Dignity and Social Equity SDGs", image: SDG_Mindmap_2 }
   ]
 };
-
-// --- NEW MODULE CONTENT: SDG Part 2 ---
 const sdgPart2Content: ModuleContent = {
   title: "SDG Part 2: Equality, Economic Development, and Infrastructure",
   youtubeId: "DdTvj1umbNI",
@@ -493,8 +477,6 @@ const sdgPart2Content: ModuleContent = {
     { title: "Equality and Justice SDGs", image: SDG_Mindmap_3 }
   ]
 };
-
-// --- NEW MODULE CONTENT: SDG Part 3 ---
 const sdgPart3Content: ModuleContent = {
   title: "SDG Part 3: Environmental Sustainability and Call to Action",
   youtubeId: "fo4qU8-eT_s",
@@ -610,20 +592,20 @@ const sdgPart3Content: ModuleContent = {
   ]
 };
 
-
-// --- HELPER CONSTANT ---
+// --- Helper Constant ---
 const STORAGE_KEY = "completedModules";
 
 const ModuleDetailPage: React.FC = () => {
   const { moduleId } = useParams<{ moduleId: string }>();
   const navigate = useNavigate();
+  const { addEcoPoints } = useUser(); // Get the addEcoPoints function
 
-  // State for this component's UI
+  // --- State ---
   const [isCompleted, setIsCompleted] = useState(false);
   const [selectedMindmap, setSelectedMindmap] = useState<string | null>(null);
   const [isMindmapModalOpen, setIsMindmapModalOpen] = useState(false);
-  
-  // --- READ FROM LOCALSTORAGE ON MOUNT ---
+
+  // --- Read from localStorage on mount ---
   useEffect(() => {
     if (moduleId) {
       const savedStatus = localStorage.getItem(STORAGE_KEY);
@@ -636,34 +618,34 @@ const ModuleDetailPage: React.FC = () => {
 
   // --- Dynamic Content Selection ---
   let currentContent: ModuleContent;
-  if (moduleId === 'water-conservation') {
-    currentContent = waterConservationContent;
-  } else if (moduleId === 'forest-conservation') {
-    currentContent = forestConservationContent;
-  } else if (moduleId === 'energy-conservation') {
-    currentContent = energyConservationContent;
-  } else if (moduleId === 'renewable-energy') {
-    currentContent = renewableEnergyContent;
-  } else if (moduleId === 'sdg-part-1') { // --- NEW SDG Part 1 ---
-    currentContent = sdgPart1Content;
-  } else if (moduleId === 'sdg-part-2') { // --- NEW SDG Part 2 ---
-    currentContent = sdgPart2Content;
-  } else if (moduleId === 'sdg-part-3') { // --- NEW SDG Part 3 ---
-    currentContent = sdgPart3Content;
-  }
+  if (moduleId === 'water-conservation') currentContent = waterConservationContent;
+  else if (moduleId === 'forest-conservation') currentContent = forestConservationContent;
+  else if (moduleId === 'energy-conservation') currentContent = energyConservationContent;
+  else if (moduleId === 'renewable-energy') currentContent = renewableEnergyContent;
+  else if (moduleId === 'sdg-part-1') currentContent = sdgPart1Content;
+  else if (moduleId === 'sdg-part-2') currentContent = sdgPart2Content;
+  else if (moduleId === 'sdg-part-3') currentContent = sdgPart3Content;
   else {
-    // Fallback for an invalid module ID
     return <div>Module not found!</div>;
   }
 
+  // --- Updated handleMarkComplete function ---
   const handleMarkComplete = () => {
-    if (moduleId) {
+    if (moduleId && !isCompleted) { // Check if not already completed
       const savedStatus = localStorage.getItem(STORAGE_KEY);
       const completed = savedStatus ? JSON.parse(savedStatus) : {};
+      
+      // Only award points if it's the first time
+      if (!completed[moduleId]) {
+        addEcoPoints(5);
+        // You could add a toast notification here for a better UX
+        // e.g., toast({ title: "Module Complete!", description: "You've earned 5 Eco Points!" });
+      }
+
       completed[moduleId] = true;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
       setIsCompleted(true);
-      navigate('/sus-game/teaching');
+      navigate(`/teaching?completed=${moduleId}`);
     }
   };
 
@@ -675,11 +657,12 @@ const ModuleDetailPage: React.FC = () => {
             <img src={completionImage} alt="Completion" className="mx-auto mb-4 w-24 h-24 pixelated" />
             <h2 className="text-2xl mb-2">Well done, Eco-Warrior!</h2>
             <p className="text-md mb-4">You have successfully completed the "{currentContent.title}" module.</p>
-            <PixelButton onClick={() => navigate('/sus-game/teaching')} variant="primary">
+            <PixelButton onClick={() => navigate('/teaching')} variant="primary">
               Back to All Modules
             </PixelButton>
           </div>
         )}
+        
         {/* YouTube Video */}
         {currentContent.youtubeId && (
           <div className="mb-8 border-4 border-border p-2 bg-card">
@@ -783,7 +766,7 @@ const ModuleDetailPage: React.FC = () => {
         {!isCompleted && (
           <div className="text-center mt-8">
             <PixelButton onClick={handleMarkComplete} variant="primary">
-              Mark as Complete
+              Mark as Read
             </PixelButton>
           </div>
         )}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PixelButton } from '../components/ui/pixel-button';
-import heroBackgroundVideo from '/herosection.mp4';
 import { PixelCard } from "../components/ui/pixel-card";
 import { AuthModal } from "../components/auth/AuthModal";
 
@@ -60,7 +59,7 @@ const HomePage: React.FC = () => {
         <div className="relative h-screen text-white overflow-hidden">
           <video
             className="absolute inset-0 w-full h-full object-cover z-0"
-            src={heroBackgroundVideo}
+            src="/sus-game/herosection.mp4"
             autoPlay loop muted playsInline
           ></video>
           

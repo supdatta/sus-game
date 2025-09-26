@@ -515,9 +515,9 @@ const WordSearchGame: React.FC = () => {
         Return
       </PixelButton>
 
-      <div className="flex flex-row items-center justify-center w-full max-w-full px-8 gap-4">
+      <div className="flex flex-row items-center justify-center w-full max-w-full px-2 gap-1">
         {/* Left Side Video */}
-        <div className="hidden lg:block w-1/3 h-screen">
+        <div className="hidden lg:block w-2/5 h-screen">
           <video
             src="/sus-game/video1.mp4"
             autoPlay

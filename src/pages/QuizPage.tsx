@@ -103,7 +103,7 @@ const QuizPage: React.FC = () => {
         } else {
             updateNpcDialogue('incorrect', `The correct answer was "${correctAnswer}"`);
         }
-        
+
         // Clear timer and set timeout for next question
         if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
         if (timerTimeoutRef.current) clearTimeout(timerTimeoutRef.current);
@@ -173,10 +173,10 @@ const QuizPage: React.FC = () => {
         if (lifelineCount > 0 && currentQuestion && shuffledOptions.length > 2) {
             setLifelineCount(prev => prev - 1);
             updateNpcDialogue('lifeline');
-            
+
             const correctAnswer = currentQuestion.answer;
             const incorrectOptions = shuffledOptions.filter(opt => opt !== correctAnswer && !disabledOptions.includes(opt));
-            
+
             // Disable two random incorrect options
             const optionsToDisable: string[] = [];
             while (optionsToDisable.length < 2 && incorrectOptions.length > 0) {
@@ -213,8 +213,6 @@ const QuizPage: React.FC = () => {
             case 'start':
                 return (
                     <div id="start-screen">
-                        <h1 className={`text-3xl sm:text-4xl font-bold ${gradientTextClass}`}>Gaia's Challenge</h1>
-                        <p className="text-gray-600 mt-2 mb-6">Test your knowledge and become an Earth Guardian!</p>
                         <PixelButton onClick={startGame} className={buttonBaseClass}>Start Quiz</PixelButton>
                     </div>
                 );
@@ -266,8 +264,6 @@ const QuizPage: React.FC = () => {
             case 'end':
                 return (
                     <div id="end-screen">
-                        <h1 id="end-title" className={`text-3xl sm:text-4xl font-bold ${gradientTextClass}`}>{getEndTitle()}</h1>
-                        <p id="end-message" className="text-gray-600 mt-2">{getEndMessage()}</p>
                         <p className="text-lg text-gray-600 mt-4">Your Final Score:</p>
                         <p id="final-score" className="text-5xl font-bold text-teal-500 my-4">{score}</p>
                         <PixelButton onClick={startGame} className={`${buttonBaseClass} mt-4`}>Play Again</PixelButton>
@@ -280,9 +276,9 @@ const QuizPage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex bg-gradient-to-tr from-cyan-200 to-cyan-300 relative">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-teal-200 to-cyan-300 relative">
             {/* --- FLOATING "RETURN" BUTTON --- */}
-            <PixelButton 
+            <PixelButton
                 onClick={() => navigate(-1)} // Navigates to the previous page (Dashboard)
                 variant="secondary" // Light colored variant
                 className="absolute top-4 left-4 z-10 flex items-center gap-2"
@@ -292,20 +288,40 @@ const QuizPage: React.FC = () => {
                 Return
             </PixelButton>
 
-            <div className="w-1/4 h-screen">
-                <video autoPlay loop muted className="w-full h-full object-cover">
-                    <source src="/sus-game/video1.mp4" type="video/mp4" />
-                </video>
-            </div>
-            <div className="w-1/2 flex items-center justify-center p-4">
-                <div className="w-full max-w-2xl game-container rounded-2xl shadow-xl p-6 md:p-8 text-center mx-auto bg-white/90 backdrop-blur-md">
-                    {renderScreen()}
+            <div className="flex flex-row items-center justify-center w-full max-w-full px-2 gap-1">
+                {/* Left Side Video */}
+                <div className="hidden lg:block w-2/5 h-screen">
+                    <video
+                        src="/sus-game/video1.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full rounded-lg shadow-lg object-cover"
+                    />
                 </div>
-            </div>
-            <div className="w-1/4 h-screen">
-                <video autoPlay loop muted className="w-full h-full object-cover">
-                    <source src="/sus-game/video2.mp4" type="video/mp4" />
-                </video>
+
+                <div className="game-wrapper flex-grow">
+                    <div
+                        id="game-app"
+                        className="w-full text-center"
+                    >
+
+                        {renderScreen()}
+                    </div>
+                </div>
+
+                {/* Right Side Video */}
+                <div className="hidden lg:block w-1/3 h-screen">
+                    <video
+                        src="/sus-game/video2.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full rounded-lg shadow-lg object-cover"
+                    />
+                </div>
             </div>
         </div>
     );

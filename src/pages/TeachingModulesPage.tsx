@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { PixelCard } from "../components/ui/pixel-card";
 import { PixelButton } from "../components/ui/pixel-button";
 
@@ -16,6 +16,7 @@ const getCompletedModules = (): Record<string, boolean> => {
 
 const TeachingModulesPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [completedModules, setCompletedModules] = useState(getCompletedModules);
 
   const modules = [
@@ -69,6 +70,9 @@ const TeachingModulesPage: React.FC = () => {
     },
   ];
 
+  const completedId = searchParams.get("completed");
+  const completedModule = modules.find((m) => m.id === completedId);
+
   useEffect(() => {
     const handleStorageChange = () => {
       setCompletedModules(getCompletedModules());
@@ -111,6 +115,23 @@ const TeachingModulesPage: React.FC = () => {
             Each module is designed to teach you practical skills for a sustainable future.
           </p>
         </div>
+
+        {/* Completion Banner */}
+        {completedId && (
+          <PixelCard className="mb-8 border-4 border-green-500">
+            <div className="p-4 flex flex-col md:flex-row items-center justify-between gap-3">
+              <div className="text-center md:text-left">
+                <h2 className="font-pixel text-sm text-green-700 mb-1">Module marked as read</h2>
+                <p className="font-pixel text-xs text-green-800">
+                  Completed "{completedModule?.title ?? completedId}". Explore more modules below.
+                </p>
+              </div>
+              <PixelButton variant="secondary" onClick={() => setSearchParams({})}>
+                Dismiss
+              </PixelButton>
+            </div>
+          </PixelCard>
+        )}
 
         {/* Progress Overview */}
         <PixelCard className="mb-8">
@@ -187,9 +208,10 @@ const TeachingModulesPage: React.FC = () => {
                       variant={isCompleted ? "secondary" : "primary"} 
                       size="sm" 
                       className="w-full"
-                      onClick={() => navigate(`/sus-game/module/${module.id}`)}
+                      // THIS IS THE FIX: The path is now correct for the router setup.
+                      onClick={() => navigate(`/module/${module.id}`)}
                     >
-                      {isCompleted ? "Completed" : "Start Module"}
+                      {isCompleted ? "Review Module" : "Start Module"}
                     </PixelButton>
                   </div>
                 </div>

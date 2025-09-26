@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PixelButton } from '../components/ui/pixel-button';
 import { ArrowLeft } from 'lucide-react';
-
-// Styling inspired by Wordgame.html and other minigames
-const gradientTextClass = "bg-gradient-to-r from-cyan-500 to-cyan-600 bg-clip-text text-transparent";
-const buttonBaseClass = "w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 px-6 rounded-lg text-xl transition-transform transform hover:scale-105";
 
 const gameData = {
     "words": [
@@ -42,6 +38,10 @@ const iceBlockStates = [
 ];
 const playerIconSVG = `<svg viewBox="0 0 20 20" fill="#083344"><rect x="3" y="10" width="14" height="5" rx="2.5" /><rect x="6" y="5" width="8" height="6" rx="2" /></svg>`;
 const SVG_NS = "http://www.w3.org/2000/svg";
+
+// Styling
+const gradientTextClass = "bg-gradient-to-r from-cyan-500 to-cyan-600 bg-clip-text text-transparent";
+const buttonBaseClass = "w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 px-6 rounded-lg text-xl transition-transform transform hover:scale-105";
 
 const HangmanGame: React.FC = () => {
     const navigate = useNavigate();
@@ -98,7 +98,7 @@ const HangmanGame: React.FC = () => {
                 {letter}
             </button>
         ));
-    }, [guessedLetters, currentAnswer]); // Added currentAnswer to dependencies
+    }, [guessedLetters, currentAnswer]);
 
     const allLettersGuessed = useCallback(() => {
         return currentAnswer.split('').every(letter => guessedLetters.has(letter));
@@ -152,14 +152,14 @@ const HangmanGame: React.FC = () => {
 
         pathSvgRef.current.innerHTML = '';
         playerIconRef.current.innerHTML = playerIconSVG;
-        
+
         const width = pathSvgRef.current.clientWidth;
         const height = pathSvgRef.current.clientHeight;
         const y = height / 2;
         const startX = 40;
         const endX = width - 40;
         const pathWidth = endX - startX;
-        
+
         const line = document.createElementNS(SVG_NS, 'line');
         line.setAttribute('x1', String(startX));
         line.setAttribute('y1', String(y));
@@ -175,7 +175,7 @@ const HangmanGame: React.FC = () => {
             const nodeX = startX + (i / (TOTAL_WORDS - 1)) * pathWidth;
             const nodeGroup = document.createElementNS(SVG_NS, 'g');
             nodeGroup.dataset.index = String(i);
-            
+
             if (i === 0) { // Start Node
                 const flarePoints = "0,-18 -4,-14 -14,-4 -18,0 -14,4 -4,14 0,18 4,14 14,4 18,0 14,-4 4,-14";
                 const flare = document.createElementNS(SVG_NS, 'polygon');
@@ -184,7 +184,7 @@ const HangmanGame: React.FC = () => {
                 flare.setAttribute("transform", `translate(${nodeX}, ${y})`);
                 nodeGroup.appendChild(flare);
             }
-            
+
             if (i === TOTAL_WORDS - 1) { // End Node
                 const rect = document.createElementNS(SVG_NS, 'rect');
                 rect.setAttribute("x", String(nodeX - 18));
@@ -195,7 +195,7 @@ const HangmanGame: React.FC = () => {
                 rect.setAttribute("fill", "#dbeafe");
                 nodeGroup.appendChild(rect);
             }
-            
+
             const circle = document.createElementNS(SVG_NS, 'circle');
             circle.setAttribute('cx', String(nodeX));
             circle.setAttribute('cy', String(y));
@@ -204,7 +204,7 @@ const HangmanGame: React.FC = () => {
             circle.setAttribute('fill', 'white');
             circle.classList.add('path-node-circle');
             nodeGroup.appendChild(circle);
-            
+
             pathSvgRef.current.appendChild(nodeGroup);
         }
         movePlayerIcon(currentWordIndex);
@@ -216,8 +216,8 @@ const HangmanGame: React.FC = () => {
         const nodes = pathSvgRef.current.querySelectorAll('.path-node-circle');
         nodes.forEach((node, i) => {
             if (i < currentWordIndex) { // Completed
-                node.setAttribute('stroke', '#0891B2'); // var(--accent-secondary)
-                node.setAttribute('fill', '#0891B2');   // var(--accent-secondary)
+                node.setAttribute('stroke', '#0891B2');
+                node.setAttribute('fill', '#0891B2');
             } else { // Upcoming
                 node.setAttribute('stroke', '#9ca3af');
                 node.setAttribute('fill', 'white');
@@ -227,13 +227,12 @@ const HangmanGame: React.FC = () => {
             }
         });
     }, [currentWordIndex]);
-    
+
     const movePlayerIcon = useCallback((targetIndex: number) => {
         if (!pathSvgRef.current || !playerIconRef.current) return;
         const node = pathSvgRef.current.querySelector(`g[data-index="${targetIndex}"] circle`);
         if (!node) return;
         const targetX = parseFloat(node.getAttribute('cx') || '0');
-        // Adjust for player icon's actual width if needed, assuming it's centered
         playerIconRef.current.style.transform = `translateX(${targetX - (playerIconRef.current.offsetWidth / 2)}px)`;
     }, []);
 
@@ -257,30 +256,26 @@ const HangmanGame: React.FC = () => {
         setGuessedLetters(new Set());
         setMessageText('');
         setNextButtonVisible(false);
-        // Shuffle words if not already shuffled or if starting a new game
         if (gameWords.length === 0 || currentWordIndex === 0) {
             setGameWords([...gameData.words].sort(() => 0.5 - Math.random()));
         }
-        // Update currentWordData will happen via currentWordIndex state change
     }, [currentWordIndex, gameWords]);
 
     useEffect(() => {
         if (gameState === 'start') {
-            // Initialize the game when the component mounts or restarts
             setGameWords([...gameData.words].sort(() => 0.5 - Math.random()));
             setLives(MAX_LIVES);
             setGuessedLetters(new Set());
             setMessageText('');
             setNextButtonVisible(false);
             setIsWin(false);
-            setCurrentWordIndex(0); // Ensure it starts from the first word
+            setCurrentWordIndex(0);
         }
     }, [gameState]);
 
     useEffect(() => {
         if (gameState === 'game' && currentWordData) {
             // This effect runs when currentWordIndex changes, effectively starting a new word
-            // No need to call startNewWord here directly, as state updates will trigger re-renders
         }
     }, [gameState, currentWordIndex, currentWordData]);
 
@@ -291,8 +286,8 @@ const HangmanGame: React.FC = () => {
 
     const handleContinueCheckpoint = useCallback(() => {
         setGameState('game');
-        setCurrentWordIndex(prev => prev + 1); // Advance to next word after checkpoint
-        setLives(MAX_LIVES); // Restore lives at checkpoint
+        setCurrentWordIndex(prev => prev + 1);
+        setLives(MAX_LIVES);
         setGuessedLetters(new Set());
         setMessageText('');
         setNextButtonVisible(false);
@@ -324,15 +319,15 @@ const HangmanGame: React.FC = () => {
         setMessageText('');
         setNextButtonVisible(false);
         setIsWin(false);
-        setGameWords([...gameData.words].sort(() => 0.5 - Math.random())); // Reshuffle for new game
+        setGameWords([...gameData.words].sort(() => 0.5 - Math.random()));
     }, []);
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-cyan-200 to-cyan-300 relative">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-cyan-200 to-blue-300 relative">
             {/* --- FLOATING "RETURN" BUTTON --- */}
-            <PixelButton 
-                onClick={() => navigate(-1)} // Navigates to the previous page (Dashboard)
-                variant="secondary" // Light colored variant
+            <PixelButton
+                onClick={() => navigate(-1)}
+                variant="secondary"
                 className="absolute top-4 left-4 z-10 flex items-center gap-2"
                 size="sm"
             >
@@ -340,30 +335,33 @@ const HangmanGame: React.FC = () => {
                 Return
             </PixelButton>
 
-            <div className="flex flex-row items-center justify-center w-full max-w-7xl gap-4">
+            <div className="flex flex-row items-center justify-center w-full max-w-full px-2 gap-1">
                 {/* Left Side Video */}
-                <div className="hidden lg:block w-1/4 h-screen">
-                    <video 
-                        src="/sus-game/video1.mp4" 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
+                <div className="hidden lg:block w-2/5 h-screen">
+                    <video
+                        src="/sus-game/video1.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
                         className="w-full h-full rounded-lg shadow-lg object-cover"
                     />
                 </div>
 
                 <div className="game-wrapper flex-grow">
-                    <div id="progress-container" className={`w-full max-w-4xl mx-auto p-4 relative ${gameState === 'game' || gameState === 'checkpoint' ? '' : 'hidden'}`}>
-                        <svg ref={pathSvgRef} id="path-svg" width="100%" height="100%"></svg>
-                        <div ref={playerIconRef} id="player-icon" className="absolute top-1/2 left-0 mt-[15px] z-10 transition-transform duration-1000 ease-in-out" />
-                    </div>
+                    <div
+                        id="game-app"
+                        className="w-full text-center"
+                    >
 
-                    <div id="game-app" className="w-full max-w-3xl bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-6 md:p-8 text-center">
+                        {/* Progress Container */}
+                        <div id="progress-container" className={`w-full max-w-4xl mx-auto p-4 relative ${gameState === 'game' || gameState === 'checkpoint' ? '' : 'hidden'}`}>
+                            <svg ref={pathSvgRef} id="path-svg" width="100%" height="100%"></svg>
+                            <div ref={playerIconRef} id="player-icon" className="absolute top-1/2 left-0 mt-[15px] z-10 transition-transform duration-1000 ease-in-out" />
+                        </div>
+
                         {gameState === 'start' && (
                             <div id="start-screen">
-                                <h1 className={`text-4xl sm:text-5xl font-bold ${gradientTextClass}`}>Arctic Rescue</h1>
-                                <h2 className="text-xl font-semibold text-gray-700 mt-2">A Word of Ice</h2>
                                 <div id="ice-block-start" className="my-6 flex justify-center" dangerouslySetInnerHTML={{ __html: iceBlockStates[0] }}></div>
                                 <p className="text-gray-600 mt-4 mb-8 max-w-md mx-auto">Kip the polar bear is stranded! Solve all {TOTAL_WORDS} climate-related words to move the rescue icon and bring him to safety. Good luck!</p>
                                 <PixelButton onClick={startGame} className={buttonBaseClass}>Start Rescue Mission</PixelButton>
@@ -396,7 +394,7 @@ const HangmanGame: React.FC = () => {
                                 </div>
                                 {nextButtonVisible && (
                                     <div id="next-btn-container" className="mt-4">
-                                        <PixelButton onClick={handleNextWord} className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-lg mt-4">
+                                        <PixelButton onClick={handleNextWord} className={buttonBaseClass}>
                                             {currentWordIndex < TOTAL_WORDS - 1 ? 'Next Rescue Step' : 'Finish Rescue'}
                                         </PixelButton>
                                     </div>
@@ -411,16 +409,14 @@ const HangmanGame: React.FC = () => {
                                 <p className="text-lg text-gray-600 mt-4">Your Final Score:</p>
                                 <p id="final-score" className="text-6xl font-bold text-cyan-500 my-4">{score}</p>
                                 <PixelButton onClick={handleRestartGame} className={buttonBaseClass}>Start New Rescue</PixelButton>
-                                <Link to="/sus-game/dashboard" className={`${buttonBaseClass} bg-gray-500 hover:bg-gray-600 text-white mt-4 inline-block`}>Back to Dashboard</Link>
                             </div>
                         )}
-                        
+
                         {gameState === 'checkpoint' && (
                             <div id="checkpoint-screen" className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
                                 <div className="bg-white p-8 rounded-lg text-center shadow-2xl max-w-sm">
-                                    <h2 className={`text-3xl font-bold ${gradientTextClass}`}>Checkpoint!</h2>
                                     <p className="text-gray-600 my-4">You're halfway there! The mission has been resupplied. Your health is fully restored for the final stretch!</p>
-                                    <PixelButton onClick={handleContinueCheckpoint} className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg text-lg">Continue Rescue</PixelButton>
+                                    <PixelButton onClick={handleContinueCheckpoint} className={buttonBaseClass}>Continue Rescue</PixelButton>
                                 </div>
                             </div>
                         )}
@@ -428,13 +424,13 @@ const HangmanGame: React.FC = () => {
                 </div>
 
                 {/* Right Side Video */}
-                <div className="hidden lg:block w-1/4 h-screen">
-                    <video 
-                        src="/sus-game/video2.mp4" 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
+                <div className="hidden lg:block w-1/3 h-screen">
+                    <video
+                        src="/sus-game/video2.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
                         className="w-full h-full rounded-lg shadow-lg object-cover"
                     />
                 </div>

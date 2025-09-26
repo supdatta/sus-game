@@ -41,7 +41,53 @@
     --radius: 0px; /* Sharp corners for pixel-art style */
     --pixel-shadow: 4px 4px 0px hsl(30 20% 8% / 0.75);
     --pixel-shadow-hover: 6px 6px 0px hsl(30 20% 8% / 0.75);
+    /* --- Speech Bubble Styles (New) --- */
+  .speech-bubble-left-pointer {
+    position: relative;
+    background: hsl(30 60% 90%); /* Light peach for cards */
+    color: hsl(30 20% 12%); /* Darker text for on-peach cards */
+    border-radius: .4em;
+    border: 2px solid hsl(30 15% 35%); /* Subtle, lighter brown for borders */
+    box-shadow: 4px 4px 0px hsl(30 20% 8% / 0.75);
   }
+
+  .speech-bubble-left-pointer:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: hsl(30 60% 90%); /* Match background color */
+    border-left: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+  }
+
+  .speech-bubble-bottom-pointer {
+    position: relative;
+    background: hsl(30 60% 90%); /* Light peach for cards */
+    color: hsl(30 20% 12%); /* Darker text for on-peach cards */
+    border-radius: .4em;
+    border: 2px solid hsl(30 15% 35%); /* Subtle, lighter brown for borders */
+    box-shadow: 4px 4px 0px hsl(30 20% 8% / 0.75);
+  }
+
+  .speech-bubble-bottom-pointer:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: hsl(30 60% 90%); /* Match background color */
+    border-bottom: 0;
+    margin-left: -10px;
+    margin-bottom: -10px;
+  }
+}
 
   /* The .dark class can be used for overrides if you ever add a light/dark mode toggle */
   .dark {
@@ -89,4 +135,3 @@
     image-rendering: pixelated;
   }
 }
-

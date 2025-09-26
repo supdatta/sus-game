@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Added useNavigate for consistency with HangmanGame.tsx
-import { PixelCard } from '../components/ui/pixel-card';
+import { Link, useNavigate } from 'react-router-dom';
 import { PixelButton } from '../components/ui/pixel-button';
 import { ArrowLeft } from 'lucide-react';
-
-// Styling inspired by quiz.tsx and crossword.html
-const gradientTextClass = "bg-gradient-to-r from-teal-500 to-cyan-600 bg-clip-text text-transparent";
-const buttonBaseClass = "font-pixel py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md";
 
 const wordList = [
     { "answer": "RENEWABLE", "clue": "Energy that won't run out (e.g. solar)" },
@@ -51,7 +46,7 @@ interface CrosswordClue {
 }
 
 const CrosswordGame: React.FC = () => {
-    const navigate = useNavigate(); // Added useNavigate
+    const navigate = useNavigate();
     const [grid, setGrid] = useState<Cell[][]>([]);
     const [clues, setClues] = useState<{ across: CrosswordClue[]; down: CrosswordClue[] }>({ across: [], down: [] });
     const [activeClue, setActiveClue] = useState<CrosswordClue | null>(null);
@@ -72,7 +67,7 @@ const CrosswordGame: React.FC = () => {
                 if (orientation === 'across') tempGrid[y][x + i] = wordObj.answer[i];
                 else tempGrid[y + i][x] = wordObj.answer[i];
             }
-            placedClues.push({ ...wordObj, x, y, orientation, number: 0 }); // Number will be assigned later
+            placedClues.push({ ...wordObj, x, y, orientation, number: 0 });
         };
 
         const getNewPosition = (clue: CrosswordClue, i: number, j: number, newOrientation: 'across' | 'down') => {
@@ -94,7 +89,7 @@ const CrosswordGame: React.FC = () => {
                         if ((y > 0 && currentGrid[y - 1]?.[x + i]) || (y < gridSize - 1 && currentGrid[y + 1]?.[x + i])) return false;
                     }
                 }
-            } else { // 'down'
+            } else {
                 if (y + word.length > gridSize) return false;
                 if ((y > 0 && currentGrid[y - 1]?.[x]) || (y + word.length < gridSize && currentGrid[y + word.length]?.[x])) return false;
 
@@ -109,7 +104,6 @@ const CrosswordGame: React.FC = () => {
             return true;
         };
 
-        // Place the first word (longest) in the middle
         const firstWord = words.shift();
         if (firstWord) {
             const startY = Math.floor(gridSize / 2);
@@ -128,7 +122,7 @@ const CrosswordGame: React.FC = () => {
                         if (existingClue.answer[i] === wordToPlace.answer[j]) {
                             const newOrientation = existingClue.orientation === 'across' ? 'down' : 'across';
                             const newPos = getNewPosition(existingClue, i, j, newOrientation);
-                            
+
                             if (canPlace(wordToPlace.answer, newPos.x, newPos.y, newOrientation, tempGrid)) {
                                 bestFit = { word: wordToPlace, x: newPos.x, y: newPos.y, orientation: newOrientation };
                                 break;
@@ -143,12 +137,11 @@ const CrosswordGame: React.FC = () => {
             if (bestFit) {
                 placeWord(bestFit.word, bestFit.x, bestFit.y, bestFit.orientation);
             } else {
-                words.push(wordToPlace); // Put back if no fit found
+                words.push(wordToPlace);
             }
             attempts++;
         }
 
-        // Assign numbers
         placedClues.sort((a, b) => a.y - b.y || a.x - b.x);
         let clueNumber = 1;
         const numberCoords: Record<string, number> = {};
@@ -160,7 +153,6 @@ const CrosswordGame: React.FC = () => {
             clue.number = numberCoords[coordKey];
         });
 
-        // Initialize the React grid state
         const newGrid: Cell[][] = Array(gridSize).fill(null).map((_, y) =>
             Array(gridSize).fill(null).map((_, x) => ({
                 value: '',
@@ -233,7 +225,7 @@ const CrosswordGame: React.FC = () => {
                 nextClue = cellClues.find(c => c.orientation === 'across') || cellClues[0];
             }
         }
-       
+
         if (nextClue) {
             highlightClue(nextClue);
             focusOn(x, y);
@@ -265,7 +257,7 @@ const CrosswordGame: React.FC = () => {
                 const isPartOfClue = clue.orientation === 'across'
                     ? rIdx === clue.y && cIdx >= clue.x && cIdx < clue.x + clue.answer.length
                     : cIdx === clue.x && rIdx >= clue.y && rIdx < clue.y + clue.answer.length;
-                
+
                 if (isPartOfClue) {
                     return { ...cell, isWordCorrect: true, isLetterCorrect: false, isIncorrect: false };
                 }
@@ -287,7 +279,6 @@ const CrosswordGame: React.FC = () => {
 
         if (allSolved) {
             setMessage("Congratulations! You've solved the puzzle!");
-            // Optionally, navigate to a reward page or show a modal
         }
     }, [clues, grid]);
 
@@ -315,9 +306,9 @@ const CrosswordGame: React.FC = () => {
             const prevX = activeClue?.orientation === 'across' ? x - 1 : x;
             const prevY = activeClue?.orientation === 'down' ? y - 1 : y;
             focusOn(prevX, prevY);
-        } else if (e.key === 'ArrowUp') { e.preventDefault(); focusOn(x, y - 1); } 
-        else if (e.key === 'ArrowDown') { e.preventDefault(); focusOn(x, y + 1); } 
-        else if (e.key === 'ArrowLeft') { e.preventDefault(); focusOn(x - 1, y); } 
+        } else if (e.key === 'ArrowUp') { e.preventDefault(); focusOn(x, y - 1); }
+        else if (e.key === 'ArrowDown') { e.preventDefault(); focusOn(x, y + 1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); focusOn(x - 1, y); }
         else if (e.key === 'ArrowRight') { e.preventDefault(); focusOn(x + 1, y); }
     }, [activeClue, focusOn]);
 
@@ -366,14 +357,14 @@ const CrosswordGame: React.FC = () => {
             const isPartOfClue = clue.orientation === 'across'
                 ? rIdx === clue.y && cIdx >= clue.x && cIdx < clue.x + clue.answer.length
                 : cIdx === clue.x && rIdx >= clue.y && rIdx < clue.y + clue.answer.length;
-            
+
             if (isPartOfClue) {
                 const letterIndex = clue.orientation === 'across' ? cIdx - clue.x : rIdx - clue.y;
                 return { ...cell, value: clue.answer[letterIndex], isWordCorrect: true, isLetterCorrect: false, isIncorrect: false };
             }
             return cell;
         })));
-        checkWord(clue); // Mark as correct after revealing
+        checkWord(clue);
     }, [activeClue, checkWord]);
 
     const solveAll = useCallback(() => {
@@ -386,11 +377,11 @@ const CrosswordGame: React.FC = () => {
     }, [generateCrossword]);
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-cyan-200 to-cyan-300 relative">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-tr from-teal-200 to-cyan-300 relative">
             {/* --- FLOATING "RETURN" BUTTON --- */}
-            <PixelButton 
-                onClick={() => navigate(-1)} // Navigates to the previous page (Dashboard)
-                variant="secondary" // Light colored variant
+            <PixelButton
+                onClick={() => navigate(-1)}
+                variant="secondary"
                 className="absolute top-4 left-4 z-10 flex items-center gap-2"
                 size="sm"
             >
@@ -398,31 +389,30 @@ const CrosswordGame: React.FC = () => {
                 Return
             </PixelButton>
 
-            <div className="flex flex-row items-center justify-center w-full max-w-7xl gap-4">
+            <div className="flex flex-row items-center justify-center w-full max-w-full px-2 gap-1">
                 {/* Left Side Video */}
-                <div className="hidden lg:block w-1/4 h-screen">
-                    <video 
-                        src="/sus-game/video1.mp4" 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
+                <div className="hidden lg:block w-2/5 h-screen">
+                    <video
+                        src="/sus-game/video1.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
                         className="w-full h-full rounded-lg shadow-lg object-cover"
                     />
                 </div>
 
                 <div className="game-wrapper flex-grow">
-                    <div className="w-full max-w-5xl mx-auto bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-6 md:p-8 text-center">
-                        <header className="text-center mb-4">
-                            <h1 className={`text-3xl sm:text-4xl font-bold ${gradientTextClass}`}>Climate Change Crossword</h1>
-                            <p className="text-gray-600 mt-2">Test your environmental knowledge!</p>
-                        </header>
-                        
+                    <div
+                        id="game-app"
+                        className="w-full text-center"
+                    >
+
                         <div className="text-center h-12 my-4 p-3 bg-white rounded-lg shadow-inner text-gray-700 font-semibold flex items-center justify-center">
                             {message}
                         </div>
 
-                        <main className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="md:col-span-2">
                                 <div className="grid-container bg-gray-400 rounded-md p-1" style={{
                                     display: 'grid',
@@ -474,7 +464,7 @@ const CrosswordGame: React.FC = () => {
                                         {clues.across.map(clue => (
                                             <div
                                                 key={`${clue.number}-${clue.orientation}`}
-                                                className={`p-1.5 rounded-md cursor-pointer transition-colors ${activeClue?.number === clue.number && activeClue?.orientation === clue.orientation ? 'bg-teal-100' : ''}`}
+                                                className={`p-1.5 rounded-md cursor-pointer transition-colors ${activeClue?.number === clue.number && activeClue?.orientation === activeClue.orientation ? 'bg-teal-100' : ''}`}
                                                 onClick={() => handleFocus(clue.x, clue.y, false, clue)}
                                             >
                                                 {clue.number}. {clue.clue}
@@ -488,7 +478,7 @@ const CrosswordGame: React.FC = () => {
                                         {clues.down.map(clue => (
                                             <div
                                                 key={`${clue.number}-${clue.orientation}`}
-                                                className={`p-1.5 rounded-md cursor-pointer transition-colors ${activeClue?.number === clue.number && activeClue?.orientation === clue.orientation ? 'bg-teal-100' : ''}`}
+                                                className={`p-1.5 rounded-md cursor-pointer transition-colors ${activeClue?.number === clue.number && activeClue?.orientation === activeClue.orientation ? 'bg-teal-100' : ''}`}
                                                 onClick={() => handleFocus(clue.x, clue.y, false, clue)}
                                             >
                                                 {clue.number}. {clue.clue}
@@ -497,30 +487,29 @@ const CrosswordGame: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                        </main>
-                        
-                        <footer className="mt-8 flex flex-col justify-center items-center gap-4">
+                        </div>
+
+                        <div className="mt-8 flex flex-col justify-center items-center gap-4">
                             <div className="h-6 text-lg font-semibold text-green-600 opacity-100">{message.includes("Congratulations") ? message : ''}</div>
                             <div className="flex flex-wrap justify-center gap-4">
-                                <PixelButton onClick={checkPuzzle} className={`${buttonBaseClass} bg-sky-600 hover:bg-sky-700 text-white`}>Check Puzzle</PixelButton>
-                                <PixelButton onClick={clearErrors} className={`${buttonBaseClass} bg-gray-500 hover:bg-gray-600 text-white`}>Clear Errors</PixelButton>
-                                <PixelButton onClick={() => revealWord()} className={`${buttonBaseClass} bg-yellow-600 hover:bg-yellow-700 text-white`}>Reveal Word</PixelButton>
-                                <PixelButton onClick={solveAll} className={`${buttonBaseClass} bg-green-600 hover:bg-green-700 text-white`}>Solve All</PixelButton>
-                                <PixelButton onClick={resetPuzzle} className={`${buttonBaseClass} bg-red-600 hover:bg-red-700 text-white`}>New Puzzle</PixelButton>
-                                <Link to="/sus-game/dashboard" className={`${buttonBaseClass} bg-gray-800 hover:bg-gray-900 text-white`}>Back to Dashboard</Link>
+                                <PixelButton onClick={checkPuzzle} className="font-pixel py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md bg-sky-600 hover:bg-sky-700 text-white">Check Puzzle</PixelButton>
+                                <PixelButton onClick={clearErrors} className="font-pixel py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md bg-gray-500 hover:bg-gray-600 text-white">Clear Errors</PixelButton>
+                                <PixelButton onClick={() => revealWord()} className="font-pixel py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md bg-yellow-600 hover:bg-yellow-700 text-white">Reveal Word</PixelButton>
+                                <PixelButton onClick={solveAll} className="font-pixel py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md bg-green-600 hover:bg-green-700 text-white">Solve All</PixelButton>
+                                <PixelButton onClick={resetPuzzle} className="font-pixel py-2 px-6 rounded-lg text-lg transition-transform transform hover:scale-105 shadow-md bg-red-600 hover:bg-red-700 text-white">New Puzzle</PixelButton>
                             </div>
-                        </footer>
+                        </div>
                     </div>
                 </div>
 
                 {/* Right Side Video */}
-                <div className="hidden lg:block w-1/4 h-screen">
-                    <video 
-                        src="/sus-game/video2.mp4" 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
+                <div className="hidden lg:block w-1/3 h-screen">
+                    <video
+                        src="/sus-game/video2.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
                         className="w-full h-full rounded-lg shadow-lg object-cover"
                     />
                 </div>

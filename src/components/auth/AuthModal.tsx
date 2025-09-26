@@ -1,135 +1,78 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { PixelButton } from "@/components/ui/pixel-button";
-import { PixelCard } from "@/components/ui/pixel-card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PixelButton } from "../ui/pixel-button";
+import { AuthContext } from "@/context/AuthContext"; // Import the context
+import { useToast } from "../ui/use-toast";
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  mode: "login" | "signup";
-  onModeChange: (mode: "login" | "signup") => void;
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, mode, onModeChange }) => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    username: ""
-  });
+export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoginView, setIsLoginView] = useState(true);
+  
+  const authContext = useContext(AuthContext);
+  const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  if (!authContext) {
+    // This should ideally not happen if the provider is set up correctly
+    return null;
+  }
+  const { login } = authContext;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // This would connect to your backend authentication
-    console.log(`${mode} attempt:`, formData);
-    onClose();
+    // When in sign-up view, pass isSignUp = true so a new user is created in browser memory
+    const success = login(email, password, !isLoginView);
+    if (success) {
+      onClose(); // Close modal on successful login or sign-up
+    } else {
+      toast({
+        variant: "destructive",
+        title: isLoginView ? "Login Failed" : "Sign Up Failed",
+        description: isLoginView
+          ? "Invalid credentials. Please try again."
+          : "Could not create account. Try a different username.",
+      });
+    }
   };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <PixelCard className="border-0 shadow-none">
-          <DialogHeader className="mb-6">
-            <DialogTitle className="font-pixel text-lg text-center text-foreground">
-              {mode === "login" ? "Welcome Back!" : "Join the Quest!"}
-            </DialogTitle>
-            <DialogDescription className="font-pixel text-xs text-center text-muted-foreground">
-              {mode === "login" 
-                ? "Sign in to continue your environmental adventure" 
-                : "Create your account to start saving the planet"}
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {mode === "signup" && (
-              <div className="space-y-2">
-                <Label htmlFor="username" className="font-pixel text-xs text-foreground">
-                  Username
-                </Label>
-                <Input
-                  id="username"
-                  name="username"
-                  type="text"
-                  value={formData.username}
-                  onChange={handleInputChange}
-                  className="font-pixel text-xs"
-                  required
-                />
-              </div>
-            )}
+      <DialogContent className="sm:max-w-md bg-card border-4 border-border shadow-pixel-lg">
+        <DialogHeader>
+          <DialogTitle className="font-pixel text-2xl">{isLoginView ? 'Login' : 'Sign Up'}</DialogTitle>
+          <DialogDescription className="font-pixel text-sm">
+            {isLoginView ? 'Enter your credentials to access your eco-journey.' : 'Create an account to start saving the world!'}
+          </DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit}>
+          <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="font-pixel text-xs text-foreground">
-                Email
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="font-pixel text-xs"
-                required
-              />
+              <Label htmlFor="email" className="font-pixel">Email</Label>
+              <Input id="email" type="email" placeholder="admin@123" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="font-pixel text-xs text-foreground">
-                Password
-              </Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="font-pixel text-xs"
-                required
-              />
+              <Label htmlFor="password" className="font-pixel">Password</Label>
+              <Input id="password" type="password" placeholder="12345" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
-
-            {mode === "signup" && (
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="font-pixel text-xs text-foreground">
-                  Confirm Password
-                </Label>
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleInputChange}
-                  className="font-pixel text-xs"
-                  required
-                />
-              </div>
-
-            )}
-            <div className="flex flex-col space-y-3 pt-4">
-              <PixelButton type="submit" variant="primary" className="w-full">
-                {mode === "login" ? "Sign In" : "Create Account"}
-              </PixelButton>
-              <PixelButton 
-
-                type="button" 
-                variant="outline" 
-                className="w-full"
-                onClick={() => onModeChange(mode === "login" ? "signup" : "login")}
-              >
-                {mode === "login" ? "Need an account? Sign Up" : "Already have an account? Sign In"}
-              </PixelButton>
-            </div>
-          </form>
-        </PixelCard>
+          </div>
+          <PixelButton type="submit" className="w-full" variant="primary">
+            {isLoginView ? 'Login' : 'Create Account'}
+          </PixelButton>
+        </form>
+        <button
+          onClick={() => setIsLoginView(!isLoginView)}
+          className="w-full mt-2 font-pixel text-xs text-center text-muted-foreground hover:text-foreground"
+        >
+          {isLoginView ? "Don't have an account? Sign Up" : "Already have an account? Login"}
+        </button>
       </DialogContent>
     </Dialog>
-
   );
-
 };
-export { AuthModal };

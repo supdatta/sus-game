@@ -162,7 +162,7 @@ const LeaderboardPage: React.FC = () => {
           </div>
         </PixelCard>
 
-        {/* Achievement Challengesss */}
+        
         <div className="mt-8 text-center">
           <PixelCard className="max-w-2xl mx-auto">
             <h2 className="font-pixel text-lg text-foreground mb-4">
@@ -172,7 +172,7 @@ const LeaderboardPage: React.FC = () => {
               Complete more quests, save more CO₂, and help the planet while competing 
               with eco-warriors from around the world.
             </p>
-            <PixelButton variant="hero" size="lg" onClick={() => navigate("/sus-game/dashboard")}>
+            <PixelButton variant="hero" size="lg" onClick={() => navigate("/dashboard")}>
               Start New Quest
             </PixelButton>
           </PixelCard>
